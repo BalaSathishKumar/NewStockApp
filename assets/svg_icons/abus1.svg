@@ -1,0 +1,37 @@
+<svg width="370" height="157" viewBox="0 0 370 157" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_0_1007)">
+<g clip-path="url(#clip1_0_1007)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 16C0 7.16343 7.16344 0 16 0H354C362.837 0 370 7.16344 370 16V90.4121C370 99.2486 362.837 106.412 354 106.412H154.619C145.782 106.412 138.619 113.576 138.619 122.412V139.876C138.619 148.697 131.481 155.853 122.66 155.876L16.0412 156.151C7.18857 156.174 0 149.004 0 140.151L0 16Z" fill="#D8F46C"/>
+<mask id="mask0_0_1007" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="370" height="157">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 16C0 7.16343 7.16344 0 16 0H354C362.837 0 370 7.16344 370 16V90.4121C370 99.2486 362.837 106.412 354 106.412H154.619C145.782 106.412 138.619 113.576 138.619 122.412V139.876C138.619 148.697 131.481 155.853 122.66 155.876L16.0412 156.151C7.18857 156.174 0 149.004 0 140.151L0 16Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_0_1007)">
+</g>
+<g clip-path="url(#clip2_0_1007)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M325.375 -9H364.094V37.2H325.375V-9Z" fill="#D8F46C"/>
+<rect x="278.781" y="-9" width="46.5938" height="20.46" fill="#2C2738"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M325.375 -9V37.86H278.781L325.375 -9Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M370 -14.9399L322.969 32.3601L370 79.4401V-14.9399Z" fill="#C9EB49"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M278.781 37.86V-9H231.75" fill="#D8F46C"/>
+<ellipse cx="278.781" cy="1.33999" rx="6.5625" ry="6.6" fill="#6B49EB"/>
+<ellipse cx="350.094" cy="4.86001" rx="6.5625" ry="6.6" fill="white"/>
+<ellipse cx="353" cy="62.9" rx="8.3125" ry="8.36" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M359.045 68.6956C360.495 67.1931 361.388 65.1437 361.388 62.8846C361.388 58.276 357.673 54.54 353.09 54.54C350.844 54.54 348.806 55.4378 347.312 56.896L359.045 68.6956Z" fill="#2C2738"/>
+<ellipse cx="325.713" cy="34.8993" rx="22.2031" ry="22.33" transform="rotate(45 325.713 34.8993)" fill="#C6CEDD"/>
+<ellipse cx="325.868" cy="34.8989" rx="10.7188" ry="10.78" transform="rotate(45 325.868 34.8989)" fill="#6B49EB"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M311.125 51.8066C319.852 59.3386 333.085 58.9273 341.413 50.5993C349.741 42.2713 350.152 29.0384 342.62 20.3121L311.125 51.8066Z" fill="white"/>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_1007">
+<rect width="370" height="156.192" fill="white"/>
+</clipPath>
+<clipPath id="clip1_0_1007">
+<rect width="370" height="156.192" fill="white"/>
+</clipPath>
+<clipPath id="clip2_0_1007">
+<rect width="138.25" height="94.38" fill="white" transform="translate(231.75 -14.9399)"/>
+</clipPath>
+</defs>
+</svg>

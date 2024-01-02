@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "861491753635",
+    "project_id": "sauda-cdc07",
+    "storage_bucket": "sauda-cdc07.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861491753635:android:18c20c2f6a0c1635914516",
+        "android_client_info": {
+          "package_name": "com.app.sauda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "861491753635-2or6jn4rfl9nlmiobl68lr2spm35rnqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.sauda",
+            "certificate_hash": "23b0faa9a59fe36b83a080357ca76b65b8228e2d"
+          }
+        },
+        {
+          "client_id": "861491753635-6v01l45eha3lij24nic4cautkne9b65g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.sauda",
+            "certificate_hash": "b9f2f0a7e3f5a0f89f0f231dbd53e0be022a56aa"
+          }
+        },
+        {
+          "client_id": "861491753635-tcford67jtpdueo8ebgmjrs37p6h43u0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.sauda",
+            "certificate_hash": "d26227082b2552953f6edfe61d17a1236a44277a"
+          }
+        },
+        {
+          "client_id": "861491753635-rkku1gdnu41hvi0toaq4fb09u809hrl3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOeJvZpEtGhqTZGYqvxpmRux7x57S4mhs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861491753635-6tgii93bcndfsou2ni4qtsju06v3383o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
