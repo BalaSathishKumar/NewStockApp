@@ -212,7 +212,7 @@ class _UserDirUIState extends State<UserDirUI> {
 
 class MasonryGridTile extends StatefulWidget {
 
-  final dynamic? item;
+  final Users? item;
 
   const MasonryGridTile({Key? key,
     required  this.item,
@@ -230,8 +230,8 @@ class _MasonryGridTileState extends State<MasonryGridTile> {
     return GestureDetector(
       onTap: (){
         print('selected directry : ${widget.item?.name}');
-        print('selected directry : ${widget.item.id}');
-        print('selected directry : ${widget.item.professionName}');
+        print('selected directry : ${widget.item?.id.toString()}');
+        print('selected directry : ${widget.item?.professionName}');
         showCustomBottomSheet(deviceheight,devicewidth,context,widget.item);
       },
       child: Card(
@@ -378,7 +378,7 @@ class _MasonryGridTileState extends State<MasonryGridTile> {
               );
   }
 
-  showCustomBottomSheet(double deviceheight,double devicewidth, BuildContext context,dynamic item) {
+  showCustomBottomSheet(double deviceheight,double devicewidth, BuildContext context,Users? item) {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -389,7 +389,7 @@ class _MasonryGridTileState extends State<MasonryGridTile> {
       ),
       builder: (BuildContext context) {
         return Container(
-          height: deviceheight/2+300,
+          height: deviceheight/2+260,
           decoration: BoxDecoration(
               color: Appcolors.white,
               borderRadius: BorderRadius.only(
@@ -454,14 +454,14 @@ class _MasonryGridTileState extends State<MasonryGridTile> {
                         ),
 
                         SizedBox(height: 8),
-                        Text(item.name,style: CustomTextStyle.txt16Rmtxtblk),
+                        Text(item?.name ?? "",style: CustomTextStyle.txt16Rmtxtblk),
                         SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(item.name,style: CustomTextStyle.txt16Rl),
+                            Text(item?.premiumType ?? "",style: CustomTextStyle.txt16Rl),
                             SizedBox(width: 8),
-                            Text("4.5",style: CustomTextStyle.txt16Rmtxtblk),
+                            Text(item?.ratings ?? "",style: CustomTextStyle.txt16Rmtxtblk),
                             Icon(Icons.star,color: Colors.yellow,size: 16,)
                           ],
                         ),
@@ -486,7 +486,7 @@ class _MasonryGridTileState extends State<MasonryGridTile> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                        item.professionName ?? "",
+                                        item?.professionName ?? "",
                                         style: CustomTextStyle.txt12Rrtxtgry95,
                                         maxLines: 1,
                                         softWrap: false,
@@ -529,15 +529,16 @@ class _MasonryGridTileState extends State<MasonryGridTile> {
                         ),
                         SizedBox(height: 8),
                         Container(
-                          height: 100,
-                          //  color: Colors.red,
+                          width:devicewidth,
+                          //height: 100,
+                         //   color: Colors.red,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 18.0,right: 18),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("About me",style: CustomTextStyle.txt14gpquickstatsgrey,),
-                                Text("This section is reserved for about me from the dealer or broker, not more than 2 to 3 sentences showing how they can be of help to the end users.",
+                                Text( item?.about ?? "",
                                   style: CustomTextStyle.txt14Rrtxtblk,
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,)
@@ -545,22 +546,26 @@ class _MasonryGridTileState extends State<MasonryGridTile> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 12),
                         Container(
                           // color: Colors.red,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              buildQuickStat(devicewidth,"Industry Experience ","10+ years","With Sauda","2+ years"),
+                              buildpopupcontainers(devicewidth, "Deals done  ", getMetaData(item?.userMetaData, 1) ?? "NA"),
+                              buildpopupcontainers(devicewidth, "Industry Experience  ", getMetaData(item?.userMetaData, 2) ?? "NA"),
+                              buildpopupcontainers(devicewidth, "Expertise  ", getMetaData(item?.userMetaData, 3) ?? "NA"),
+                      /*        buildQuickStat(devicewidth,"Industry Experience ","10+ years","With Sauda","2+ years"),
                               buildQuickStat(devicewidth,"Users Helped ","100+","Deals done ","1200+ "),
-                              buildQuickStat(devicewidth,"Total Txn Size","10 Crores","Avg Txn Size","5.2 Lakh"),
+                              buildQuickStat(devicewidth,"Total Txn Size","10 Crores","Avg Txn Size","5.2 Lakh"),*/
                             ],
                           ),
                         ),
                         SizedBox(height: 8),
                         GestureDetector(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => DealerChatPage(chatuserID:  item.id,chatusername: item.name)));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => DealerChatPage(chatuserID:  item?.id ?? 0,chatusername: item?.name ??"")));
 
                           },
                           child: Container(

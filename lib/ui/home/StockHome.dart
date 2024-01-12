@@ -1,3 +1,4 @@
+import 'package:base_flutter_provider_project/data/models/AdvisorModels/ConsultationListModel.dart';
 import 'package:base_flutter_provider_project/data/models/Explore_model/ExploreModel.dart';
 import 'package:base_flutter_provider_project/data/models/Explore_model/ExplorePerformModel.dart';
 import 'package:base_flutter_provider_project/data/models/Insights_model/BlogsResponseModel.dart';
@@ -19,6 +20,7 @@ import 'package:base_flutter_provider_project/ui/onboarding/onboarding.dart';
 import 'package:base_flutter_provider_project/ui/welcome/welcome.dart';
 import 'package:base_flutter_provider_project/viewModel/CommonProvider.dart';
 import 'package:base_flutter_provider_project/viewModel/dashboard_view_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +33,10 @@ import '../../common_widgets/Stock_widgets/TopBrokers.dart';
 import '../../common_widgets/Stock_widgets/TrendingStocks.dart';
 import '../../common_widgets/alert_widgets/error_dialog.dart';
 import '../../common_widgets/appbar_widgets/homepage_appbar.dart';
+
 import '../../common_widgets/button_widgets/button_with_icon.dart';
 import '../../common_widgets/loading_widgets/loader.dart';
+
 import '../../constants/colors.dart';
 import '../../constants/constant.dart';
 import '../../constants/local_images.dart';
@@ -81,7 +85,19 @@ class _StockHomeState extends State<StockHome> {
   late DropOptions _dropOptions;
   late ProfessionViewModel _professionViewModel;
 
-  final List<DrawerItem> drawerItems2 = [
+   List<DrawerItem> drawerItems2 = [
+    DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'Profile'),
+   // DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'KYC Update'),
+   // DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'Profile'),
+    DrawerItem(iconAsset: LocalSVGImages.menu5, title: 'Transaction History'),
+    DrawerItem(iconAsset: LocalSVGImages.menu4, title: 'User Directory'),
+    DrawerItem(iconAsset: LocalSVGImages.menu7, title: 'My Portfolio'),
+    DrawerItem(iconAsset: LocalSVGImages.menu8, title: 'Chat With Sauda Team'),
+    DrawerItem(iconAsset: LocalSVGImages.menu8, title: 'Consultations'),
+    DrawerItem(iconAsset: LocalSVGImages.menu3, title: 'Rewards & Referrals'),
+    DrawerItem(iconAsset: LocalSVGImages.menu3, title: 'Promocode'),
+  ];
+  final List<DrawerItem> uniquelist = [
     DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'Profile'),
    // DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'KYC Update'),
    // DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'Profile'),
@@ -101,104 +117,7 @@ class _StockHomeState extends State<StockHome> {
     LocalPNGImages.ad2
   ];
   List<String?> Bannerimages = [];
-  final List<ListItem> items = [
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        text: 'Yellow Studios',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'YLW',
-        colors: 2,
-        imageUrl: LocalPNGImages.cp1),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Pharma Focused",
-        statyears: "5+ years",
-        text: 'Purple Flame Co.',
-        rate: '1681',
-        shname: 'PFC',
-        colors: 2,
-        imageUrl: LocalPNGImages.cp2),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Crypto",
-        statyears: "5+ years",
-        text: 'Dino Pharma',
-        rate: '541',
-        shname: 'DRL',
-        colors: 2,
-        imageUrl: LocalPNGImages.cp3),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        statyears: "5+ years",
-        text: 'API Holdings',
-        rate: '321',
-        shname: 'API',
-        colors: 2,
-        imageUrl: LocalPNGImages.cp4),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        statyears: "5+ years",
-        text: 'Abservetech',
-        rate: '150',
-        shname: 'ABS',
-        colors: 5,
-        imageUrl: LocalPNGImages.cp5),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        statyears: "5+ years",
-        text: 'Yellow Studios',
-        rate: '132',
-        shname: 'YLW',
-        colors: 5,
-        imageUrl: LocalPNGImages.cp1),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        statyears: "5+ years",
-        text: 'Purple Flame Co.',
-        rate: '1681',
-        shname: 'PFC',
-        colors: 6,
-        imageUrl: LocalPNGImages.cp2),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        statyears: "5+ years",
-        text: 'Dino Pharma',
-        rate: '541',
-        shname: 'DRL',
-        colors: 6,
-        imageUrl: LocalPNGImages.cp3),
-  ];
+
   int _currentPageIndex = 0;
   String RollName = "";
 
@@ -215,7 +134,8 @@ class _StockHomeState extends State<StockHome> {
         '_professionViewModel.ProfessionList1 ${_professionViewModel.ProfessionList.length}');
     //UI render callback
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _dashboardViewModel.dashboardapi(onFailureRes: onFailureRes, onSuccessRes: onSuccessRes);
+      _profileViewModel.profileapi(onFailureRes: onProfileFailureRes, onSuccessRes: onProfileSuccessRes);
+
       _dropOptions.getDropOPtions(null);
       _dropOptions.getDropStocks(null);
       _dropOptions.getDropOPtionsStockid(0);
@@ -275,28 +195,43 @@ class _StockHomeState extends State<StockHome> {
                           padding: const EdgeInsets.all(8.0),
                           child: Center(child: _buildDotIndicator()),
                         )),
-                        Consumer<ProfileViewModel>(
-                            builder: (context, proviledata, child) {
-                          return UnListed(
-                              devicewidth: devicewidth,
-                              onPressed: () {
-                                // context.router.push(Tradeunlisted());
-                                if (Constant.userRoll == "Brokers") {
-                                  if (proviledata
-                                          .profileResponseModel?.user?.status == 3) {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => CreateListing()));
-                                  } else {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(onPressed: (){
-                                      if (Constant.userRoll == "Users") {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> (NewKycUser(IsKycUpdate: true,))));
+                        Consumer<CommonProvider>(
+                          builder: (context,chkCommVM,child){
+                          return Consumer<ProfileViewModel>(
+                              builder: (context, proviledata, child) {
+                                hitProfileApi(chkCommVM.IsTriggerProfile);
+                            return UnListed(
+                                devicewidth: devicewidth,
+                                onPressed: () {
+                                  // context.router.push(Tradeunlisted());
+                                  if (Constant.userRoll == "Brokers") {
+                                    var chkProfile = proviledata.profileResponseModel?.user;
+                                    var isMember = chkProfile?.isMemberShip;
+                                    print('IsMember ${isMember}');
+                                    if (chkProfile?.status == 3){
+                                      if(isMember != null && isMember){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreateListing()));
+                                      }else{
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(
+                                            onPressed: (){
+                                              if (Constant.userRoll != "Users") {
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=> (SelectPayment())));
+                                              }
+                                            })));
                                       }
+
+                                    } else {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(
+                                    onPressed: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegiterAndKyc()));
                                     })));
-                                  }
-                                } else if (Constant.userRoll == "Users" || Constant.userRoll == "Guest" || Constant.userRoll == "Advisors") {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => TradeUnlisted()));
-                                } else {}
-                              });
-                        }),
+                                    }
+                                  } else if (Constant.userRoll == "Users" || Constant.userRoll == "Guest" || Constant.userRoll == "Advisors") {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => TradeUnlisted()));
+                                  } else {}
+                                });
+                          });}
+                        ),
                         Consumer<DashboardViewModel>(
                             builder: (context, dashTS, child) {
                           return TrendingStocks(
@@ -370,17 +305,18 @@ class _StockHomeState extends State<StockHome> {
                           return dashTBdata.dashboardResponseModel?.data?.featuredBrokers != null && dashTBdata.dashboardResponseModel!.data!.featuredBrokers!.isEmpty
                               ? Container()
                               : TopBrokers(
-                                  IsViewPressed: () {
+                            IsViewPressed: () {
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => TopBrokerDetail(featuredBrokers: _dashboardViewModel.dashboardResponseModel?.data?.featuredBrokers)));
                                   },
                                   optionslist: [],
                                   firsttitle: "Featured",
                                   secondtitle: "Top Brokers",
                                   imagetag: "topbrokersviewall",
-                                  items: items,
+
                                   topbrokers: _dashboardViewModel.dashboardResponseModel?.data?.featuredBrokers,
                                   serviceyear: _dashboardViewModel.serviceyears,
-                                  devicewidth: devicewidth);
+                                  devicewidth: devicewidth,
+                                  devicehgt: deviceheight,  );
                         }),
                         SizedBox(height: 10),
                         Consumer<DashboardViewModel>(
@@ -410,7 +346,7 @@ class _StockHomeState extends State<StockHome> {
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => StockViewallPage(stockname: "Top Stocks")));
                                   },
                                   imagetag: "topstocksviewall",
-                                  items: items,
+
                                   devicewidth: devicewidth,
                                   featuredStocks: _dashboardViewModel.dashboardResponseModel?.data?.featuredStocks,
                                   ipostocks: []);
@@ -442,7 +378,7 @@ class _StockHomeState extends State<StockHome> {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => StockViewallPage(stockname: "IPO & FPO")));
                             },
                             imagetag: "upcomingciewall",
-                            items: items,
+
                             ipostocks: _dashboardViewModel
                                 .dashboardResponseModel?.data?.ipoFpo,
                             devicewidth: devicewidth),
@@ -552,7 +488,7 @@ class _StockHomeState extends State<StockHome> {
   onBlogFailureRes(String p1) {}
 
   onBlogsSuccessRes(BlogsResponseModel? p1) {
-    _profileViewModel.profileapi(onFailureRes: onProfileFailureRes, onSuccessRes: onProfileSuccessRes);
+
   }
 
   onProfileFailureRes(String p1) {
@@ -570,18 +506,37 @@ class _StockHomeState extends State<StockHome> {
   }
 
   onProfileSuccessRes(ProfileResponseModel? profileRes) {
+    _dashboardViewModel.dashboardapi(onFailureRes: onFailureRes, onSuccessRes: onSuccessRes);
     print('Profile Res RollName:: ${profileRes?.user?.roleName}');
     PreferenceHelper.setString(PrefConstant.rollname, profileRes?.user?.roleName ?? "");
     getSharedValue(PrefConstant.rollname);
+
     if(profileRes?.user?.roleName == "Brokers" || profileRes?.user?.roleName == "Advisors"){
      /* drawerItems2.add(DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'Subscription'));
       Constant.drawerItems2.add(DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'Subscription'));*/
-      drawerItems2.add(DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'Subscriptions Details'));
-      Constant.drawerItems2.add(DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'Subscriptions Details'));
-    }
-    drawerItems2.add(addDrawerItem(profileRes?.user?.roleName));
+      Constant.drawerItems2.clear();
 
-   Constant.drawerItems2.add(addDrawerItem(profileRes?.user?.roleName));
+      for(DrawerItem item in drawerItems2){
+        if(item.title != "Subscriptions Details"){
+          drawerItems2.add(DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'Subscriptions Details'));
+        }
+        if(profileRes?.user?.roleName == "Brokers"){
+          if(item.title != "My Listings"){
+            drawerItems2.add(DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'My Listings'));
+          }
+        }
+        else{
+          //drawerItems2.add(addDrawerItem(profileRes?.user?.roleName));
+          if(item.title != 'My Reviews'){
+            drawerItems2.add(DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'My Reviews'));
+          }
+        }
+        Constant.drawerItems2 = drawerItems2;
+      }
+
+    }
+
+
     print('draweritem length ${ drawerItems2.length}');
     print('Constant.draweritem length ${ Constant.drawerItems2.length}');
   }
@@ -591,6 +546,7 @@ class _StockHomeState extends State<StockHome> {
     final exit = await showDialog(
         context: context,
         builder: (context) => ErrorDialog(
+          titletxt: "",
             errorMsg: "Are you sure you want to exit the app?",
             onBackPress: () {
               Navigator.of(context).pop(true);
@@ -669,7 +625,39 @@ class _StockHomeState extends State<StockHome> {
 
   onPerSuccessRes(ExplorePerformModel? p1) {
   }
+
+  void hitProfileApi(bool isTriggerProfile) {
+    if(isTriggerProfile)
+    _profileViewModel.profileapi(onFailureRes: onProfileFailureRes, onSuccessRes: onProfileSuccessRes);
+  }
 }
+
+/*showCustomBottomSheet(BuildContext context, double devicehgt,double devicewdt, DashUser? selectedBroker) {
+
+  print('ratings:: ${selectedBroker?.ratings}');
+  print('chatEnable:: ${selectedBroker?.chatEnable.toString()}');
+
+  showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(23.0),
+      ),
+    ),
+    builder: (BuildContext context) {
+
+  return  UserDetailFun(devicehgt,devicewdt,selectedBroker,context);
+    },
+  );
+}*/
+
+
+
+
+
+
+
 
 addDrawerItem(String? roleName) {
   if (roleName == "Brokers") {
@@ -780,7 +768,7 @@ void openFullScreenDrawer(BuildContext context, double deviceheight, List<Drawer
               break;
             case "Chat With Sauda Team":
               print("chat with sausa team");
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomPage(chatuserID: 0, IsAdminChat: true,)));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomPage(chatuserID: 0, IsAdminChat: true,username: "Admin",)));
               break;
             case "Consultations":
               print("consultation list");
@@ -805,8 +793,7 @@ void userDireNavFun(BuildContext context) {
   if (Constant.userRoll == 'Users' || Constant.userRoll == 'Guest') {
     Navigator.push(context, MaterialPageRoute(builder: (context) => AdvisorandBroker(IsClickForAdvisorHelp: false)));
   } else if (Constant.userRoll == 'Brokers') {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => DealerUserDirectory()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => DealerUserDirectory()));
   } else {
     Navigator.push(context, MaterialPageRoute(builder: (context) => AdvisorandBroker(IsClickForAdvisorHelp: false)));
   }
@@ -821,8 +808,9 @@ void LogoutFun(BuildContext context, bool isUnAuth) {
   showDialog(
       context: context,
       builder: (context) => ErrorDialog(
+        titletxt: isUnAuth ?"Session Expired": "",
           errorMsg: isUnAuth
-              ? "Please log out and log in again to continue."
+              ? "Your session has expired.You will be redirected to the Login page"
               : "Are you sure you want to Logout? ",
           onBackPress: () {
             PreferenceHelper.setString(PrefConstant.isLoggedIn, "false");

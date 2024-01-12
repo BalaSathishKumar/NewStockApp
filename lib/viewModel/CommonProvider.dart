@@ -14,6 +14,7 @@ class CommonProvider extends ChangeNotifier {
   bool _isAdvisorsSpeak = false;
   bool _isResendOTP = false;
   bool _isLastPage = false;
+  bool _isVALastPage = false;
   bool _isToggle = false;
   bool _isFilterApi = false;
   String _isRollnale = "";
@@ -40,7 +41,7 @@ class CommonProvider extends ChangeNotifier {
   String _pageNoExplore = "";
   int _selectedIndex = 0;
   int _changeTab = -1;
-
+  bool _isTriggerProfile = false;
 
   String _usernum = '';
   String _fcmtoken = '';
@@ -55,7 +56,7 @@ class CommonProvider extends ChangeNotifier {
   String get StockExpect => _StockExpect;
   String get ExploreCatId => _exploreCatId;
   String get PageNoExplore => _pageNoExplore;
-
+  bool get IsTriggerProfile => _isTriggerProfile;
   String get CLname => _clname;
   String get CLshares => _clshares;
   String get CLsellingcost => _clsellingcost;
@@ -90,9 +91,15 @@ class CommonProvider extends ChangeNotifier {
   bool get IsAdvisorsSpeak => _isAdvisorsSpeak;
   bool get IsResendOTP => _isResendOTP;
   bool get IsLastPage => _isLastPage;
+  bool get IsVALastPage => _isVALastPage;
   bool get IsToggle => _isToggle;
   bool get IsFilterApi => _isFilterApi;
 
+
+  void setIsTriggerProfile(bool value) {
+    _isTriggerProfile = value;
+    notifyListeners();
+  }
 
   void setUserNum(String value) {
     _usernum = value;
@@ -246,6 +253,10 @@ void setCLAddInfo(String value) {
   }
   void setIsLastPage(bool value) {
     _isLastPage = value;
+    notifyListeners();
+  }
+  void setIsVALastPage(bool value) {
+    _isVALastPage = value;
     notifyListeners();
   }
   void setIsToggle(bool value) {

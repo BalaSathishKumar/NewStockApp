@@ -56,15 +56,39 @@ class _NotificationPageState extends State<NotificationPage> {
                             onTap: () {},
                             child: Card(
                               elevation: 8,
-                              child: ListTile(
-
-                                title: Text(notifydata?[index].title ?? "", style: CustomTextStyle.txt16Rb,),
-                                subtitle: Text(notifydata?[index].message ?? "", maxLines: 3, overflow: TextOverflow.ellipsis, style: CustomTextStyle.txt14Rlblk,)
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                  //set border radius more than 50% of height and width to make circle
+                                ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                width: 200,
+                           //   height: 100,
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Set your desired color
+                                  borderRadius: BorderRadius.circular(26), // Adjust the radius as needed
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 8.0,bottom: 8),
+                                        child: Text(notifydata?[index].title ?? "", style: CustomTextStyle.txt16Rb,maxLines: 2,),
+                                      ),
+                                      Text(notifydata?[index].message ?? "", maxLines: 3, overflow: TextOverflow.ellipsis, style: CustomTextStyle.txt14Rlblk,)
+                                    ],
+                                  ),
+                                ),
+                                  ),
                               ),
-                            )
-                          ),
-                        );
-                      }),
+                            ),
+                            ),
+                          );
+                        }),
                 ),
               ],
             ),

@@ -19,14 +19,14 @@ class PaymentPlanDetails extends StatefulWidget {
 
     required this.devicewidth,
     required this.deviceheight,
-    required this.items,
+
     required this.onPressed
   });
 
 
   final double devicewidth;
   final double deviceheight;
-  final List<ListItem> items;
+
   final Function(Plans?) onPressed;
 
   @override
@@ -52,7 +52,7 @@ class _PaymentPlanDetailsState extends State<PaymentPlanDetails> {
           return Container(
 
               child: ListView.builder(
-                //itemCount: widget.items.length,
+
                   itemCount: paymentplans.PaymentPlanResponseModel?.plans?.length ?? 0,
                   itemBuilder: (context, index) {
                     var paymentpln = paymentplans.PaymentPlanResponseModel?.plans;

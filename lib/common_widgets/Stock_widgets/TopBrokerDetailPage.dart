@@ -1,8 +1,8 @@
-import 'package:base_flutter_provider_project/data/models/AdvisorModels/ConsultationListModel.dart';
+
 import 'package:base_flutter_provider_project/data/models/dashboard_model/DashboardResponseModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
+import 'package:base_flutter_provider_project/data/models/User_Directory_model/ChatUsersList.dart';
 import '../../constants/colors.dart';
 import '../../ui/Advisor&Broker/AdvisorandBroker.dart';
 import '../../ui/ChatPage/ChatRoomPage.dart';
@@ -49,7 +49,7 @@ class _TopBrokerDetailState extends State<TopBrokerDetail> {
                               child: GestureDetector(
                                 onTap: (){
                                   print('chat enabled in TOPBROKER ${ TopBrokers?[index].user?.chatEnable}');
-                                      showCustomBottomSheet(
+                                  showBrokerBottomSheet(
                                       context,
                                       TopBrokers?[index],deviceheight,devicewidth);
                                 },
@@ -151,7 +151,7 @@ class _TopBrokerDetailState extends State<TopBrokerDetail> {
                                         Expanded(
                                           flex: 2,
                                           child: Visibility(
-                                            visible: true,
+                                            visible: false,
                                             child: Container(
                                               child: Row(
                                                 children: [
@@ -246,84 +246,89 @@ class _TopBrokerDetailState extends State<TopBrokerDetail> {
     }
   }
 
-  showCustomBottomSheet(BuildContext context, FeaturedBroker? topBroker, double deviceheight, double devicewidth, ) {
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(23.0),
-        ),
+
+
+
+}
+
+showBrokerBottomSheet(BuildContext context, FeaturedBroker? topBroker, double deviceheight, double devicewidth, ) {
+  showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(23.0),
       ),
-      builder: (BuildContext context) {
-        return Container(
-          height: deviceheight/2+260,
-          decoration: BoxDecoration(
-              color: Appcolors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(23.0),
-                topRight: Radius.circular(23.0),
-              )),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: 50,
-                  width: devicewidth,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(23.0),
-                        topRight: Radius.circular(23.0),
-                      )),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0, top: 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Icon(
-                              Icons.close, color: Appcolors.black, size: 25,))
-                      ],
-                    ),
+    ),
+    builder: (BuildContext context) {
+      return Container(
+        height: deviceheight/2+260,
+        decoration: BoxDecoration(
+            color: Appcolors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(23.0),
+              topRight: Radius.circular(23.0),
+            )),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 50,
+                width: devicewidth,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(23.0),
+                      topRight: Radius.circular(23.0),
+                    )),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0, top: 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(
+                            Icons.close, color: Appcolors.black, size: 25,))
+                    ],
                   ),
                 ),
-                Container(
-                    color: Appcolors.white,
-                    child: Column(
-                      children: [
-                        Container(
-                          //      color: Colors.yellow,
-                            child: CircleAvatar(
-                              radius: 60,
-                              backgroundImage: topBroker?.user?.photoUrl != null?
-                              CachedNetworkImageProvider(
-                                  topBroker?.user?.photoUrl  ?? "",
-                                  errorListener: (){
-                                    print('error');
-                                  }
-                              )
-                                  :PlaceholderImage(),
-                              /* AssetImage(item.imageUrl)*/
+              ),
+              Container(
+                  color: Appcolors.white,
+                  child: Column(
+                    children: [
+                      Container(
+                        //      color: Colors.yellow,
+                          child: CircleAvatar(
+                            radius: 60,
+                            backgroundImage: topBroker?.user?.photoUrl != null?
+                            CachedNetworkImageProvider(
+                                topBroker?.user?.photoUrl  ?? "",
+                                errorListener: (){
+                                  print('error');
+                                }
                             )
-                        ),
-                        SizedBox(height: 8),
-                        Text(topBroker?.user?.name??"",style: CustomTextStyle.txt16Rmtxtblk),
-                        SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(topBroker?.user?.professionName.toString()??"",style: CustomTextStyle.txt16Rl),
-                            SizedBox(width: 8),
-                            Text(topBroker?.user?.ratings ?? "",style: CustomTextStyle.txt16Rmtxtblk),
-                            Icon(Icons.star,color: Colors.yellow,size: 16,)
-                          ],
-                        ),
-                        SizedBox(height: 8),
+                                :PlaceholderImage(),
+                            /* AssetImage(item.imageUrl)*/
+                          )
+                      ),
+                      SizedBox(height: 8),
+                      Text(topBroker?.user?.name??"",style: CustomTextStyle.txt16Rmtxtblk),
+                      SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(topBroker?.user?.professionName.toString()??"",style: CustomTextStyle.txt16Rl),
+                          SizedBox(width: 8),
+                          Text(topBroker?.user?.ratings ?? "",style: CustomTextStyle.txt16Rmtxtblk),
+                          Icon(Icons.star,color: Colors.yellow,size: 16,)
+                        ],
+                      ),
+                      SizedBox(height: 8),
                       /*  Padding(
                           padding: const EdgeInsets.only(left: 18.0,right: 18.0),
                           child: Container(
@@ -363,100 +368,99 @@ class _TopBrokerDetailState extends State<TopBrokerDetail> {
                                 }),
                           ),
                         ),*/
-                        SizedBox(height: 8),
-                        Container(
-                         // height: 100,
-                           width: devicewidth,
-                            //color: Colors.red.shade100,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 18.0,right: 18),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("About me",style: CustomTextStyle.txt14gpquickstatsgrey,),
-                                SizedBox(height: 10),
-                                Text(topBroker?.user?.about ?? "",
-                                  style: CustomTextStyle.txt14Rrtxtblk,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,)
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          // color: Colors.red,
+                      SizedBox(height: 8),
+                      Container(
+                        // height: 100,
+                        width: devicewidth,
+                        //color: Colors.red.shade100,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 18.0,right: 18),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              buildpopupcontainers(devicewidth,"Deals done  ",  getMetaDataa(topBroker?.user?.userMetaData,1)?? "NA"),
-                              buildpopupcontainers(devicewidth,"Industry Experience  ",  getMetaDataa(topBroker?.user?.userMetaData,2)?? "NA"),
-                              buildpopupcontainers(devicewidth,"Expertise  ",   getMetaDataa(topBroker?.user?.userMetaData,3)?? "NA"),
-
+                              Text("About me",style: CustomTextStyle.txt14gpquickstatsgrey,),
+                              SizedBox(height: 10),
+                              Text(topBroker?.user?.about ?? "",
+                                style: CustomTextStyle.txt14Rrtxtblk,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,)
                             ],
                           ),
                         ),
-                        SizedBox(height: 8),
+                      ),
+                      Container(
+                        // color: Colors.red,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            buildpopupcontainers(devicewidth,"Deals done  ",  getMetaDataa(topBroker?.user?.userMetaData,1)?? "NA"),
+                            buildpopupcontainers(devicewidth,"Industry Experience  ",  getMetaDataa(topBroker?.user?.userMetaData,2)?? "NA"),
+                            buildpopupcontainers(devicewidth,"Expertise  ",   getMetaDataa(topBroker?.user?.userMetaData,3)?? "NA"),
 
-                        chkStatus(topBroker?.user?.chatEnable) ?  GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomPage(chatuserID: topBroker?.user?.id ?? 0, IsAdminChat: false,)));
-                          },
-                          child: Container(
-                            height: 50,
-                            width: devicewidth/2+20,
-                            //  color: Colors.red,
-                            child: Padding(
-                                padding: const EdgeInsets.only(left: 0,right: 0),
-                                child: ArrowBtn(
-                                  height: 50,
-                                  width: devicewidth,
-                                  bgclr: Appcolors.btnbggrey,
-                                  btntxt: "Chat with me",
-                                  icnclr: Appcolors.black,
-                                  iconData: Icons.arrow_forward,
-                                )
-                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 8),
+
+                      chkStatus(topBroker?.user?.chatEnable) ?  GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomPage(chatuserID: topBroker?.user?.id ?? 0, IsAdminChat: false,)));
+                        },
+                        child: Container(
+                          height: 50,
+                          width: devicewidth/2+20,
+                          //  color: Colors.red,
+                          child: Padding(
+                              padding: const EdgeInsets.only(left: 0,right: 0),
+                              child: ArrowBtn(
+                                height: 50,
+                                width: devicewidth,
+                                bgclr: Appcolors.btnbggrey,
+                                btntxt: "Chat with me",
+                                icnclr: Appcolors.black,
+                                iconData: Icons.arrow_forward,
+                              )
                           ),
-                        ): SizedBox.shrink()
+                        ),
+                      ): SizedBox.shrink()
 
-                      ],
-                    ))
-              ],
-            ),
+                    ],
+                  ))
+            ],
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 
-  String? getMetaDataa(List<UserMetaData>? userMetaData, int i) {
+String? getMetaDataa(List<UserMetaData>? userMetaData, int i) {
 
-    if(userMetaData != null && userMetaData.isNotEmpty){
-      for(UserMetaData item in userMetaData ?? []){
-        if(i==1 ){
-          if(item.key == "done"){
-            return item.value ?? "";
-          }
-
+  if(userMetaData != null && userMetaData.isNotEmpty){
+    for(UserMetaData item in userMetaData ?? []){
+      if(i==1 ){
+        if(item.key == "done"){
+          return item.value ?? "";
         }
-        else if(i==2){
-          if( item.key == "service_year"){
-            return item.value ?? "";
-          }
 
+      }
+      else if(i==2){
+        if( item.key == "service_year"){
+          return item.value ?? "";
         }
-        else if(i==3){
-          if( item.key == "expertise"){
-            return item.value ?? "";
-          }
-        }
-        else{
-          return "NA";
+
+      }
+      else if(i==3){
+        if( item.key == "expertise"){
+          return item.value ?? "";
         }
       }
+      else{
+        return "NA";
+      }
     }
-
-
   }
+
+
 }

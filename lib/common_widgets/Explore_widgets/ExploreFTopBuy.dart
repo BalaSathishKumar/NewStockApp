@@ -48,10 +48,13 @@ class _TopByState extends State<TopBy> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _commonProvider.setIsToggle(true);
-      _professionViewModel.stateapi(onFailureRes: onstateFailureRes,onSuccessRes: OnstateSuccess);
-      _professionViewModel.setUserProfessionExFilter(null);
-      _professionViewModel.setUserStateExFilter(null);
-      _professionViewModel.setUserCityExFilter(null);
+      if( _professionViewModel.UserStateExpFilter?.name == null &&  _professionViewModel.UserStateExpFilter?.name != "Enter State"){
+        _professionViewModel.stateapi(onFailureRes: onstateFailureRes,onSuccessRes: OnstateSuccess);
+       // _professionViewModel.setUserProfessionExFilter(null);
+        // _professionViewModel.setUserStateExFilter(null);
+        // _professionViewModel.setUserCityExFilter(null);
+      }
+
     });
   }
 
@@ -144,6 +147,7 @@ class _TopByState extends State<TopBy> {
                               if(value != null){
                                 _professionViewModel.setUserStateExFilter(value);
                                 _professionViewModel.setUserCityExFilter(null);
+
                                 _professionViewModel.cityapi(onFailureRes: onstateFailureRes,onSuccessRes: onCitySucres, cityid: value.id.toString());
                               }
 
@@ -250,10 +254,19 @@ class _TopByState extends State<TopBy> {
   }
 
   OnstateSuccess(StateModel? p1) {
-    _professionViewModel.setUserStateExFilter(_professionViewModel.StateList[0]);
-    _professionViewModel.setUserCityExFilter(_professionViewModel.CityList[0]);
-    print('OnstateSuccess ${_professionViewModel.ProfessionList[0].name}');
-    _professionViewModel.setUserProfessionExFilter(_professionViewModel.ProfessionList[0]);
+    print(' _professionViewModel.setUserStateExFilter ${ _professionViewModel.UserStateExpFilter?.name}');
+    print(' _professionViewModel.UserCityExpFilter ${ _professionViewModel.UserCityExpFilter?.name}');
+
+    if(_professionViewModel.UserStateExpFilter?.name == null){
+      _professionViewModel.setUserStateExFilter(_professionViewModel.StateList[0]);
+      _professionViewModel.setUserCityExFilter(_professionViewModel.CityList[0]);
+      // print('OnstateSuccess ${_professionViewModel.ProfessionList[0].name}');
+      _professionViewModel.setUserProfessionExFilter(_professionViewModel.ProfessionList[0]);
+    }else{
+      _professionViewModel.setUserStateExFilter(_professionViewModel.UserStateExpFilter);
+      _professionViewModel.setUserCityExFilter(_professionViewModel.UserCityExpFilter);
+    }
+
   }
 
   onCitySucres(StateModel? p1) {

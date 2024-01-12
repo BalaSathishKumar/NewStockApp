@@ -29,7 +29,7 @@ class ContainerButton extends StatelessWidget {
       child: Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-           stars == "HRF"
+           stars == "4"
                ? Consumer<FilterPriceSelect>(
                    builder: (context, FilterPrice, child) {
                      return Container(
@@ -39,9 +39,13 @@ class ContainerButton extends StatelessWidget {
                            color:  setColor(FilterPrice,stars),   //FilterPrice.FilterPriceSelectF ? Appcolors.splashbgcolor2 : Appcolors.white,
                            border: Border.all(color: Appcolors.black, width: 1),
                            borderRadius: BorderRadius.circular(6)),
-                       child: Column(
+                       child: Row(
                          mainAxisAlignment: MainAxisAlignment.center,
                          children: [
+                           Icon(Icons.star, color: Colors.yellow, size: 12),
+                           Icon(Icons.star, color: Colors.yellow, size: 12),
+                           Icon(Icons.star, color: Colors.yellow, size: 12),
+                           Icon(Icons.star, color: Colors.yellow, size: 12),
                            Text(buttonname,
                                style: CustomTextStyle.txt14Rmtxtblk,
                                maxLines: 1,
@@ -161,7 +165,7 @@ class ContainerButton extends StatelessWidget {
 
   setColor(FilterPriceSelect filterPrice, String stars) {
     //"userrating" : "saudarating",
-  if(stars == "HRF"){
+  if(stars == "4"){
     if(ratingType == "userrating"){
       return filterPrice.FilterPriceSelectF ? Appcolors.splashbgcolor2 : Appcolors.white;
     }else{

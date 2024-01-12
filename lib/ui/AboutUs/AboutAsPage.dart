@@ -47,26 +47,15 @@ class _AboutUsPageState extends State<AboutUsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-               /*   Padding(
-                    padding: const EdgeInsets.only(top: 18.0),
-                    child: Container(
-                      height: 100,
-                       color: Colors.yellow,
-                      child:  Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      //    LogoTxtAppbar(logotag: "abtusappbar",title: "House of Investing",Isportfolio: false,onPressed: (){}),
-                        ],
-                      ),
-                    ),
-                  ),*/
-                  Stack(
+
+
+                 /* Stack(
                     children: [
                       Container(
                         //color: Colors.red.shade100,
                         child: SvgPicture.asset(LocalSVGImages.moregroup),
                       ),
-                     /* Container(
+                     *//* Container(
                         height: 416,
                        child: Column(
                          children: [
@@ -89,9 +78,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
                          ],
                        ),
                        // color: Colors.red.shade50,
-                      )*/
+                      )*//*
                     ],
-                  ),
+                  ),*/
 
 
 

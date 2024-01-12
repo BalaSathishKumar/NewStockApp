@@ -39,19 +39,26 @@ class _ExploreFilterState extends State<ExploreFilter> {
   late ExploreViewModel _exploreViewModel;
   late ProfessionViewModel _professionViewModel;
   late CommonProvider _commonProvider;
+  late FilterPriceSelect _filterPriceSelect;
   late DropOptions _dropOptions;
+  late exploreFiltervalues _exploreFiltervalues;
   @override
   void initState() {
     super.initState();
     _exploreViewModel = Provider.of<ExploreViewModel>(context, listen: false);
     _commonProvider = Provider.of<CommonProvider>(context, listen: false);
     _professionViewModel = Provider.of<ProfessionViewModel>(context, listen: false);
+    _filterPriceSelect= Provider.of<FilterPriceSelect>(context, listen: false);
+    _exploreFiltervalues=  Provider.of<exploreFiltervalues>(context, listen: false);
     _dropOptions = Provider.of<DropOptions>(context, listen: false);
     filterCat =_dropOptions.dropoptions?.id.toString() ?? "";
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _commonProvider.setChangeTab(_dropOptions.dropoptions?.id??-1);
       _commonProvider.setIsFilterApi(false);
+
+      _minPriceController.text =  _exploreFiltervalues.Filtervalues.start.toString();
+      _maxPriceController.text =  _exploreFiltervalues.Filtervalues.end.toString();
     });
 
   }
@@ -113,6 +120,12 @@ class _ExploreFilterState extends State<ExploreFilter> {
                         maxController: _maxPriceController,
                         onChanged: (v){
                           print('min ans max value ${_minPriceController.text} and ${_maxPriceController.text}');
+
+                          if(double.parse(_minPriceController.text)<= double.parse(_maxPriceController.text)){
+                            _exploreFiltervalues.getFiltervalues(RangeValues(double.parse(_minPriceController.text),double.parse(_maxPriceController.text)));
+                          }
+
+
                           },
                           firsttxt: "PRICE",
                           secondtxt: " RANGE",
@@ -123,7 +136,7 @@ class _ExploreFilterState extends State<ExploreFilter> {
                             if (values != null) {
                                _minPriceController.text = values.start.toString();
                                _maxPriceController.text = values.end.toString();
-                              Provider.of<exploreFiltervalues>(context, listen: false).getFiltervalues(values);
+                               _exploreFiltervalues.getFiltervalues(values);
                             } else {
                               print('value is null');
                             }
@@ -209,12 +222,12 @@ class _ExploreFilterState extends State<ExploreFilter> {
                                     flex: 1,
                                     child: InkWell(
                                         onTap: () {
-                                          Provider.of<FilterPriceSelect>(context, listen: false).getFilterPriceSelectF6(true);
-                                          Provider.of<FilterPriceSelect>(context, listen: false).getFilterPriceSelectF7(false);
+                                          _filterPriceSelect.getFilterPriceSelectF6(true);
+                                          _filterPriceSelect.getFilterPriceSelectF7(false);
                                           },
                                         child: ContainerButton2(
                                             devicewidth: 150,
-                                            buttonname: "Highest Rated First",
+                                            buttonname: "Highest Price First",
                                             stars: "SBR"),)),
                                 SizedBox(
                                   width: 10,
@@ -223,12 +236,12 @@ class _ExploreFilterState extends State<ExploreFilter> {
                                     flex: 1,
                                     child: InkWell(
                                         onTap: () {
-                                          Provider.of<FilterPriceSelect>(context, listen: false).getFilterPriceSelectF6(false);
-                                          Provider.of<FilterPriceSelect>(context, listen: false).getFilterPriceSelectF7(true);
+                                          _filterPriceSelect.getFilterPriceSelectF6(false);
+                                          _filterPriceSelect.getFilterPriceSelectF7(true);
                                           },
                                         child: ContainerButton2(
                                             devicewidth: 150,
-                                            buttonname: "Lowest Rated First",
+                                            buttonname: "Lowest Price First",
                                             stars: "SBR2"))),
                               ],
                             ),
@@ -255,6 +268,7 @@ class _ExploreFilterState extends State<ExploreFilter> {
                                   'min price : ${_minPriceController.text} '
                                   'max price: ${_maxPriceController.text}'
                                   'city: ${cityVM.UserCityExpFilter?.name}\n'
+                                  'state: ${cityVM.UserStateExpFilter?.name}\n'
                                   'proffession: ${cityVM.UserProfessionExpFilter?.name}'
                                   'user rating: ${ checkRating(ratingVM)}'
                                   ' sauda rating ${ checkSaudaRating(ratingVM)}'
@@ -282,9 +296,34 @@ class _ExploreFilterState extends State<ExploreFilter> {
                               );
                         },
                             btn2onpressed: () {
-                              Navigator.pop(context);
-                            });}
-                      ),
+                            //  Navigator.pop(context);
+                              _filterPriceSelect.getFilterPriceSelectF(false);
+                              _filterPriceSelect.getFilterPriceSelectF2(false);
+                              _filterPriceSelect.getFilterPriceSelectF3(false);
+                              _filterPriceSelect.getFilterPriceSelectF4(false);
+                              _filterPriceSelect.getFilterPriceSelectF5(false);
+
+                              _filterPriceSelect.getFilterSaudaRating1(false);
+                              _filterPriceSelect.getFilterSaudaRating2(false);
+                              _filterPriceSelect.getFilterSaudaRating3(false);
+                              _filterPriceSelect.getFilterSaudaRating4(false);
+                              _filterPriceSelect.getFilterSaudaRating5(false);
+
+                              _filterPriceSelect.getFilterPriceSelectF6(false);
+                              _filterPriceSelect.getFilterPriceSelectF7(false);
+
+
+                              _professionViewModel.setUserStateExFilter(_professionViewModel.StateList[0]);
+                              _professionViewModel.setUserCityExFilter(_professionViewModel.CityList[0]);
+                              _minPriceController.clear();
+                              _maxPriceController.clear();
+
+                              _dropOptions.getDropOPtions(null);
+
+                              _exploreFiltervalues.getFiltervalues(const RangeValues(0.0,0.0));
+                            }
+                      );
+                        })
                 ]),
               );
                  }
@@ -298,7 +337,7 @@ class _ExploreFilterState extends State<ExploreFilter> {
     return Container(
                 height: 180,
                 width: devicewidth,
-                color: Colors.white,
+             //   color: Colors.red.shade50,
                 child: Padding(
                   padding:
                       const EdgeInsets.only(left: 18.0, top: 10, right: 18),
@@ -325,7 +364,7 @@ class _ExploreFilterState extends State<ExploreFilter> {
                         child: Row(
                           children: [
                             Expanded(
-                                flex: 1,
+                                //flex: 1,
                                 child: InkWell(
                                     onTap: () {
 
@@ -335,7 +374,8 @@ class _ExploreFilterState extends State<ExploreFilter> {
                                         Provider.of<FilterPriceSelect>(context, listen: false).getFilterPriceSelectF3(false);
                                         Provider.of<FilterPriceSelect>(context, listen: false).getFilterPriceSelectF4(false);
                                         Provider.of<FilterPriceSelect>(context, listen: false).getFilterPriceSelectF5(false);
-                                      }else{
+                                      }
+                                      else{
                                         Provider.of<FilterPriceSelect>(context, listen: false).getFilterSaudaRating1(true);
                                         Provider.of<FilterPriceSelect>(context, listen: false).getFilterSaudaRating2(false);
                                         Provider.of<FilterPriceSelect>(context, listen: false).getFilterSaudaRating3(false);
@@ -346,12 +386,12 @@ class _ExploreFilterState extends State<ExploreFilter> {
                                     child: ContainerButton(
                                       ratingType: sortbytitle == " USER RATING" ? "userrating" : "saudarating",
                                         devicewidth: 150,
-                                        buttonname: "Highest Rated First",
-                                        stars: "HRF"))),
+                                        buttonname: "& above",
+                                        stars: "4"))),
                             SizedBox(
                               width: 10,
                             ),
-                            Expanded(
+                           /* Expanded(
                                 flex: 1,
                                 child: InkWell(
                                     onTap: () {
@@ -375,7 +415,7 @@ class _ExploreFilterState extends State<ExploreFilter> {
                                         ratingType: sortbytitle == " USER RATING" ? "userrating" : "saudarating",
                                         devicewidth: 150,
                                         buttonname: "Lowest Rated First",
-                                        stars: "LRF"))),
+                                        stars: "LRF"))),*/
                           ],
                         ),
                       ),

@@ -157,7 +157,7 @@ class _PortfolioTab1State extends State<PortfolioTab1> {
                                         left: 8.0, right: 8, bottom: 7),
                                     child: InkWell(
                                       onTap: () {
-                                        showCustomBottomSheet(context, investeddata?[index]);
+                                        showMyAssetottomSheet(context, investeddata?[index]);
                                       },
                                       child: Container(
                                           height: 100,
@@ -235,7 +235,7 @@ class _PortfolioTab1State extends State<PortfolioTab1> {
                                                               //  color: Colors.yellow.shade50,
                                                                 child: Column(
                                                                   children: [
-                                                                    Text("Holding : ${ investeddata?[index].quantity ?? ""} shares",
+                                                                    Text("Holding : ${ investeddata?[index].buyShareSize ?? ""} shares",
                                                                     //  "Holding : 6000 shares",
                                                                       style: CustomTextStyle
                                                                           .txt12Rbtitlegrey3,
@@ -326,7 +326,7 @@ class _PortfolioTab1State extends State<PortfolioTab1> {
 
 
 
-  void showCustomBottomSheet(BuildContext context, Invested? item) {
+  void showMyAssetottomSheet(BuildContext context, Invested? item) {
     showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(

@@ -13,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -62,6 +63,7 @@ class _WelcomePageState extends State<WelcomePage> {
   GoogleSignInAccount? _currentUser;
   bool _isAuthorized = false; // has granted permissions?
   String _contactText = '';
+  final fb = FacebookLogin();
 
   late GoogleSignIn _googleSignIn; //= GoogleSignIn(scopes: ['email']);
    TextEditingController _mobilenumbercontroller = TextEditingController();
@@ -88,7 +90,7 @@ class _WelcomePageState extends State<WelcomePage> {
         ],
     );
   }
-  void showCustomBottomSheet(BuildContext context) {
+  void showGuestBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(
@@ -351,6 +353,8 @@ class _WelcomePageState extends State<WelcomePage> {
                                       GestureDetector(
                                         onTap: (){
                                          // Navigator.push(context, MaterialPageRoute(builder: (context)=> SelectPayment()));
+
+                                          fbSignIn();
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.only(right: 45.0),
@@ -386,7 +390,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                           style: CustomTextStyle.txt12Rrtxtgry),
                                       InkWell(
                                           onTap: (){
-                                            showCustomBottomSheet(context);
+                                            showGuestBottomSheet(context);
                                           },
                                           child: Text( "Continue as Guest",style: CustomTextStyle.txt14Rrtxtgry2)),
                                     ],
@@ -568,6 +572,52 @@ class _WelcomePageState extends State<WelcomePage> {
       Route route = MaterialPageRoute(builder: (context) =>  SaudaHomePage());
       Navigator.pushReplacement(context, route);
     }
+  }
+
+  Future<void> fbSignIn() async {
+
+    final res1 = await fb.logOut();
+    /*logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email,
+    ]);*/
+    // Log in
+    final res = await fb.logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email,
+    ]);
+    switch (res.status) {
+      case FacebookLoginStatus.success:
+      // Logged in
+
+      // Send access token to server for validation and auth
+        final FacebookAccessToken? accessToken = res.accessToken;
+        print('Access token: ${accessToken?.token}');
+
+        // Get profile data
+        final profile = await fb.getUserProfile();
+        print('Hello, ${profile?.name}! You ID: ${profile?.userId}');
+
+        // Get user profile image url
+        final imageUrl = await fb.getProfileImageUrl(width: 100);
+        print('Your profile image: $imageUrl');
+
+        // Get email (since we request email permission)
+        final email = await fb.getUserEmail();
+        // But user can decline permission
+        if (email != null)
+          print('And your email is $email');
+
+        break;
+      case FacebookLoginStatus.cancel:
+      // User cancel log in
+        break;
+      case FacebookLoginStatus.error:
+      // Log in failed
+        print('Error while log in: ${res.error}');
+        break;
+    }
+
   }
 }
 

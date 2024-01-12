@@ -130,7 +130,7 @@ class RegisterViewModel extends BaseViewModel {
 
     required Function(String) onFailureRes,
     required Function(RegisterModel?) onSuccessRes,
-    required File propic,
+    required File? propic,
     required Map<String,dynamic> kycparams,
     required File idproofpic,
     required File pancard,

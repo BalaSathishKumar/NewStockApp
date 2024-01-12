@@ -2,6 +2,7 @@
 
 import '../config/locator.dart';
 import '../constants/strings.dart';
+import '../data/models/Explore_model/ExploreModel.dart';
 import '../data/models/SearchModel/SearchModel.dart';
 
 import '../data/repositories/search_repo.dart';
@@ -33,11 +34,6 @@ class SearchViewModel extends BaseViewModel {
       var data = await _searchRepository.searchapi(searchparams);
       if (data != null) {
         _SearchModel = data;
-
-/*        //Success State
-        if(data.stocks != null){
-          VMfilteredItems.addAll(data.stocks);
-        }*/
 
         onSuccessRes(_SearchModel?.stocks);
         setState(ViewState.success);

@@ -1013,14 +1013,14 @@ class _KycAdvisorState extends State<KycAdvisor> {
 
                                   if(_formKey.currentState!.validate() ){
                                     if(!isKycUpdate) {
-                                      if (_image != null && _aadhar != null &&
+                                      if (_aadhar != null &&
                                           _pancard != null) {
                                         _commonProvider.IsChecked
                                             ? _registerViewModel.KycAdvisorapi(
                                             isKycupdate: false,
                                             onFailureRes: onFailureRes,
                                             onSuccessRes: onSuccessRes,
-                                            propic: _image!,
+                                            propic: _image,
                                             idproofpic: _aadhar!,
                                             pancard: _pancard!,
                                             cancelledcheque: _cancelledcheque,
@@ -1309,13 +1309,17 @@ class _KycAdvisorState extends State<KycAdvisor> {
             Removedresult = savedexperience.substring(3); //if years/months in double digit
           }else if(savedexperience.length == 7){
             Removedresult = savedexperience.substring(2);
+          }else if(savedexperience?.length == 1){
+            Removedresult = "Years";
           }
           print("removed 3 letter ${Removedresult}");
           _userAgeProvider.setUserExp(Removedresult ?? "");
           if(savedexperience != null && Removedresult != null && Removedresult == "Month"){
             _userExpcontroller.text = savedexperience.replaceAll(' Month', '');
+          }else if(savedexperience != null && Removedresult != null && Removedresult == "Years"){
+            _userExpcontroller.text = savedexperience.replaceAll(' Years', '') ?? "";
           }else{
-            _userExpcontroller.text = savedexperience?.replaceAll(' Years', '') ?? "";
+            _userExpcontroller.text = savedexperience ?? "";
           }
           }
         }

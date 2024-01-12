@@ -1,3 +1,4 @@
+import '../Explore_model/ExploreDetailModel.dart';
 import '../Explore_model/ExploreModel.dart';
 
 class ConsultationListModel {
@@ -41,6 +42,7 @@ class Consultations {
   String? statusTxt;
   ConsultCategory? category;
   Stocks? stock;
+  RequestData? requestData;
 
   Consultations(
       {this.id,
@@ -55,7 +57,8 @@ class Consultations {
         this.user,
         this.statusTxt,
         this.category,
-      this.stock});
+        this.stock,
+        this.requestData});
 
   Consultations.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -72,6 +75,7 @@ class Consultations {
     statusTxt = json['status_txt'];
     category = json['category'] != null ? new ConsultCategory.fromJson(json['category']) : null;
     stock = json['stock'] != null ? new Stocks.fromJson(json['stock']) : null;
+    requestData = json['request_data'] != null ? new RequestData.fromJson(json['request_data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -97,6 +101,28 @@ class Consultations {
     if (this.stock != null) {
       data['stock'] = this.stock!.toJson();
     }
+    if (this.requestData != null) {
+      data['request_data'] = this.requestData!.toJson();
+    }
+    return data;
+  }
+}
+
+class RequestData {
+  String? title;
+  String? name;
+
+  RequestData({this.title, this.name});
+
+  RequestData.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['title'] = this.title;
+    data['name'] = this.name;
     return data;
   }
 }
@@ -477,7 +503,7 @@ class Profession {
   }
 }
 
-class User {
+class Usercc {
   int? id;
   String? name;
   String? mobile;
@@ -515,7 +541,7 @@ class User {
   String? emailMasked;
   String? mobileMasked;
 
-  User(
+  Usercc(
       {this.id,
         this.name,
         this.mobile,
@@ -553,7 +579,7 @@ class User {
         this.emailMasked,
         this.mobileMasked});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Usercc.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     mobile = json['mobile'];

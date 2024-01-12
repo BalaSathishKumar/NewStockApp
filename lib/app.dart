@@ -190,7 +190,6 @@ class _MyAppState extends State<MyApp> {
          //   initialRoutes: [const SplashRoute()],
      //   ),
 
-
           theme: ThemeData(
             primaryColor: ThemeColor.Primary,
             appBarTheme: appBarThemeData(),

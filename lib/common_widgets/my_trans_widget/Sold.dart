@@ -1,5 +1,6 @@
 import 'package:base_flutter_provider_project/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/constant.dart';
@@ -49,7 +50,7 @@ class _SoldPageState extends State<SoldPage> {
                             onTap: () {
                               print('selected data sell req::: ${solddata?[index].status.toString()}');
 
-                              EnterChat(solddata?[index].status);
+                              EnterChat(solddata?[index].status,solddata?[index].companyName ?? "");
 
                             },
                             child: Container(
@@ -121,7 +122,7 @@ class _SoldPageState extends State<SoldPage> {
                                               child: buildNamewithHeading(
                                                   devicewidth,
                                                   "No of Shares",
-                                                  "${solddata?[index].quantity ?? ""}",
+                                                  "${solddata?[index].buyshareprice ?? ""}",
                                                   CustomTextStyle.txt12Rrtxtgry2,
                                                   CustomTextStyle .txt16Rmtxtblk,
                                                   Colors.transparent,
@@ -137,7 +138,11 @@ class _SoldPageState extends State<SoldPage> {
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Icon(Icons.chat, size: 20,),
+                                                    SvgPicture.asset(LocalSVGImages.newchaticon,
+                                                      width: 20,
+                                                      height: 20,
+                                                      fit: BoxFit.fill,)
+                                                    //Icon(Icons.chat, size: 20,),
                                                   //  Text("(Chat Enabled)")
                                                   ],
                                                 ),
@@ -193,15 +198,12 @@ class _SoldPageState extends State<SoldPage> {
     );
   }
 
-  void EnterChat(int? status) {
+  void EnterChat(int? status, String assetname) {
     if (status == 2 || status == 3 || status == 4) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ChatRoomPage(chatuserID: status ?? 0,IsAdminChat: true,)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomPage(chatuserID: status ?? 0,IsAdminChat: true,username: assetname,)));
     }
     else{
-      showToast("Wait For Admin Approval..");
+      //showToast("Wait For Admin Approval..");
     }
   }
 }
