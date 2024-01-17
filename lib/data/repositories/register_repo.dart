@@ -128,24 +128,28 @@ class RegisterRepository {
   }
 
 
-  Future<RegisterModel?> KYCapi(File propic,Map<String, dynamic> kycparams,File idproofpic,File pancard,File? cancelledcheque,File? dematdetails,) async {
+  Future<RegisterModel?> KYCapi(File? propic,Map<String, dynamic> kycparams,File idproofpic,File pancard,File? cancelledcheque,File? dematdetails,) async {
 
     Map<String, dynamic> formData = kycparams;
 
-    File profilePicFile = propic;
+    File? profilePicFile = propic;
     File idProofFile = idproofpic;
     File PanCard = pancard;
     File? CancelledChq = cancelledcheque;
     File? DematDetils = dematdetails;
 
     int targetSizeInBytes = 2 * 1024 * 1024; // 2 MB
-    File compressedProfilePic = await compressImage(profilePicFile, targetSizeInBytes);
+
     File compressedProfilePic2 = await compressImage(idProofFile, targetSizeInBytes);
     File compressedProfilePic3 = await compressImage(PanCard, targetSizeInBytes);
-    formData['photo'] = await MultipartFile.fromFile(compressedProfilePic.path, filename: 'photo.jpg');
+
     formData['id_proof'] = await MultipartFile.fromFile(compressedProfilePic2.path, filename: 'id_proof.jpg');
     formData['pan_card'] = await MultipartFile.fromFile(compressedProfilePic3.path, filename: 'pan_card.jpg');
 
+    if(profilePicFile != null){
+      File compressedProfilePic = await compressImage(profilePicFile, targetSizeInBytes);
+      formData['photo'] = await MultipartFile.fromFile(compressedProfilePic.path, filename: 'photo.jpg');
+    }
     if(CancelledChq != null){
       File compressedProfilePic4 = await compressImage(CancelledChq, targetSizeInBytes);
       formData['cancelled_cheque'] = await MultipartFile.fromFile(compressedProfilePic4.path, filename: 'cancelled_cheque.jpg');

@@ -1,6 +1,7 @@
 import 'package:base_flutter_provider_project/data/models/AdvisorModels/ConsultationListModel.dart';
 import 'package:base_flutter_provider_project/viewModel/Consultation_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../common_widgets/appbar_widgets/common_appbar.dart';
@@ -9,6 +10,7 @@ import '../../common_widgets/my_trans_widget/PurchaseRequested.dart';
 import '../../common_widgets/my_trans_widget/Purchased.dart';
 import '../../constants/colors.dart';
 import '../../constants/constant.dart';
+import '../../constants/local_images.dart';
 import '../../utils/common_functions.dart';
 import '../../utils/common_textstyles.dart';
 import '../ChatPage/ChatRoomPage.dart';
@@ -79,8 +81,10 @@ class _ConsultationListState extends State<ConsultationList> {
                                                   flex: 1,
                                                   child: buildNamewithHeading(
                                                       devicewidth,
-                                                      Constant.userRoll == "Advisors"?"User Name":"Advisor Name",
-                                                      SetName(consultdata?[index]),
+                                                     // Constant.userRoll == "Advisors"?"User Name":"Advisor Name",
+                                                      consultdata?[index].requestData?.title ?? "",
+                                                    //  SetName(consultdata?[index]),
+                                                      consultdata?[index].requestData?.name ?? "",
                                                       //Constant.userRoll == "Advisors"? consultdata?[index].advisor?.name  : ,
                                                       CustomTextStyle.txt12Rrtxtgry2,
                                                       CustomTextStyle.txt16Rmtxtblk,
@@ -151,11 +155,15 @@ class _ConsultationListState extends State<ConsultationList> {
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        Padding(
+                                                        SvgPicture.asset(LocalSVGImages.newchaticon,
+                                                          width: 20,
+                                                          height: 20,
+                                                          fit: BoxFit.fill,)
+                                                    /*    Padding(
                                                           padding: const EdgeInsets.only(left: 24),
                                                           child: Icon(Icons.chat, size: 20,),
                                                         ),
-                                                        Text( Constant.userRoll == "Advisors"?"(Chat With User)":"(Chat With Advisor)")
+                                                        Text( Constant.userRoll == "Advisors"?"(Chat With User)":"(Chat With Advisor)")*/
                                                       ],
                                                     ),
                                                   ),

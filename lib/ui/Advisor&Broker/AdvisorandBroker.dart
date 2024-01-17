@@ -45,80 +45,7 @@ class AdvisorandBroker extends StatefulWidget {
 }
 
 class _AdvisorandBrokerState extends State<AdvisorandBroker> {
-  final List<ListItem> items = [
-    ListItem(
-        lotsize: "1",
-        stattxt: "Pending",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Pharma",
-        text: 'Lizzie Saavedra',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'Broker',
-        colors: 0xFF00FF7F,
-        imageUrl: LocalPNGImages.exp1),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Credited",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "AI/ML",
-        statyears: "5+ years",
-        text: 'Leanne Simpson',
-        rate: '1681',
-        shname: 'Dealer',
-        colors: 0xFFFF1493,
-        imageUrl: LocalPNGImages.exp2),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Credited",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Aviation",
-        statyears: "5+ years",
-        text: 'Yolanda Barrueco',
-        rate: '541',
-        shname: 'Broker',
-        colors: 0xFF00FFFF,
-        imageUrl: LocalPNGImages.exp1),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Pending",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Construction",
-        statyears: "5+ years",
-        text: 'Lacara Jones',
-        rate: '321',
-        shname: 'Dealer',
-        colors: 0xFFFFA500,
-        imageUrl: LocalPNGImages.exp2),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Credited",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Construction",
-        statyears: "5+ years",
-        text: 'FXVZAWLS906',
-        rate: '150',
-        shname: 'ABS',
-        colors: 0xFF9900CC,
-        imageUrl: LocalPNGImages.exp1),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Pending",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Construction",
-        statyears: "5+ years",
-        text: 'FXVZAWLS906',
-        rate: '150',
-        shname: 'ABS',
-        colors: 0xFF9900CC,
-        imageUrl: LocalPNGImages.exp1),
-  ];
+
   final FocusNode _focusNode = FocusNode();
   List<Users> AllMembers = [];
   List<Users>? AllMembers2 = [];
@@ -212,7 +139,7 @@ class _AdvisorandBrokerState extends State<AdvisorandBroker> {
                             child: StartChatWith(
                                 deviceheight: deviceheight,
                                 devicewidth: devicewidth,
-                                items: items,
+
                                 IsAdvisorHelp: IsAdvisorHelp,
                                 allmembers: chatlistvm.AllMem ?? [],
                                 // allmembers:AllMembers ?? [],
@@ -275,6 +202,8 @@ class _AdvisorandBrokerState extends State<AdvisorandBroker> {
       builder: (BuildContext context) {
         return Consumer<CommonProvider>(builder: (context, filterroll, child) {
           return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
             title: Text('Select Roll'),
             content: StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
@@ -421,7 +350,7 @@ class StartChatWith extends StatefulWidget {
       {super.key,
       required this.deviceheight,
       required this.devicewidth,
-      required this.items,
+
       required this.IsAdvisorHelp,
       required this.allmembers,
       this.selectedstocks});
@@ -429,7 +358,7 @@ class StartChatWith extends StatefulWidget {
   final double deviceheight;
   final double devicewidth;
   final bool IsAdvisorHelp;
-  final List<ListItem> items;
+
   final List<Users> allmembers;
   Stocks? selectedstocks;
 
@@ -763,7 +692,7 @@ class _StartChatWithState extends State<StartChatWith> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(chatuserdata.roleName ?? "",
+                            Text(chatuserdata.premiumType ?? "",
                                 style: CustomTextStyle.txt16Rl),
                             SizedBox(width: 8),
                             Text(chatuserdata.ratings ?? "",
@@ -782,38 +711,38 @@ class _StartChatWithState extends State<StartChatWith> {
                           child: Container(
                             // color: Colors.red.shade100,
                             height: 50,
-                            child: ListView.builder(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                // padding: EdgeInsets.all(25),
+                                decoration: BoxDecoration(
+                                  // color: Color(widget.items[index].colors).withOpacity(0.1),
+                                    color: Colors.green.withOpacity(0.1),
+                                    borderRadius:
+                                    BorderRadius.circular(60)),
+                                child: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                        chatuserdata.professionName ?? "",
+                                        style: TextStyle(
+                                            color: Appcolors.black),
+                                        // style: CustomTextStyle.txt14Rrtxttitlegrey4,
+                                        maxLines: 1,
+                                        softWrap: false,
+                                        overflow: TextOverflow.ellipsis),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            /*child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: professionAndpremium.length,
                                 itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      // padding: EdgeInsets.all(25),
-                                      decoration: BoxDecoration(
-                                          // color: Color(widget.items[index].colors).withOpacity(0.1),
-                                          color: Colors.green.withOpacity(0.1),
-                                          borderRadius:
-                                              BorderRadius.circular(60)),
-                                      child: FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                              professionAndpremium[index],
-                                              style: TextStyle(
-                                                  color: Color(widget
-                                                          .items[index].colors)
-                                                      .withOpacity(0.4)),
-                                              // style: CustomTextStyle.txt14Rrtxttitlegrey4,
-                                              maxLines: 1,
-                                              softWrap: false,
-                                              overflow: TextOverflow.ellipsis),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }),
+                                  return
+                                }),*/
                           ),
                         ),
                         SizedBox(height: 8),
@@ -848,21 +777,9 @@ class _StartChatWithState extends State<StartChatWith> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              buildpopupcontainers(
-                                  widget.devicewidth,
-                                  "Deals done  ",
-                                  getMetaData(chatuserdata.userMetaData, 1) ??
-                                      "NA"),
-                              buildpopupcontainers(
-                                  widget.devicewidth,
-                                  "Industry Experience  ",
-                                  getMetaData(chatuserdata.userMetaData, 2) ??
-                                      "NA"),
-                              buildpopupcontainers(
-                                  widget.devicewidth,
-                                  "Expertise  ",
-                                  getMetaData(chatuserdata.userMetaData, 3) ??
-                                      "NA"),
+                              buildpopupcontainers(widget.devicewidth, "Deals done  ", getMetaData(chatuserdata.userMetaData, 1) ?? "NA"),
+                              buildpopupcontainers(widget.devicewidth, "Industry Experience  ", getMetaData(chatuserdata.userMetaData, 2) ?? "NA"),
+                              buildpopupcontainers(widget.devicewidth, "Expertise  ", getMetaData(chatuserdata.userMetaData, 3) ?? "NA"),
                             ],
                           ),
                         ),

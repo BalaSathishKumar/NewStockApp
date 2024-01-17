@@ -26,12 +26,14 @@ class ChatRoomViewModel extends BaseViewModel {
   ClearChatModel? _clearchatResponseModel;
   bool _isTriggerChat = false;
 
+
   ChatRoom2Model? get getmessageResponseModel => _getmessageResponseModel;
   GetAdminMessageModel? get getAdminmessageResponseModel => _getadminmessageResponseModel;
   ClearChatModel? get clearchatResponseModel => _clearchatResponseModel;
   ChatHistoryModel? get ChatHistoryResponseModel => _getchathistoryResponseModel;
   StatusandMessageModel? get statusandmessageResponseModel => _statusandmessageResponseModel;
   bool get IsTriggerChat => _isTriggerChat;
+
 
 
   void setIsTriggerChat(bool value) {

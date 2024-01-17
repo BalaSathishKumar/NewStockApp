@@ -17,6 +17,7 @@ class PlanHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     var deviceheight = MediaQuery.of(context).size.height;
     var devicewidth = MediaQuery.of(context).size.width;
+
     return Container(
       width: devicewidth,
       child: Padding(
@@ -25,7 +26,7 @@ class PlanHistory extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 10),
-            Text("Transaction History",style: CustomTextStyle.txt18Rbblk,),
+            Text("",style: CustomTextStyle.txt18Rbblk,),
             SizedBox(height: 10),
             history.isEmpty ? Center(child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -35,6 +36,7 @@ class PlanHistory extends StatelessWidget {
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: history?.length,
                 itemBuilder: (context,index){
+                  var durationtype= history[index].transactions?.durationType ?? "";
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -59,7 +61,7 @@ class PlanHistory extends StatelessWidget {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text("Active Plan",style: CustomTextStyle.txt14Rrtxtblktxtpurple,),
+                                            Text("${durationtype.capitalize()} Plan",style: CustomTextStyle.txt14Rrtxtblktxtpurple,),
                                             SizedBox(height: 10,),
                                             Text(formatDatewithTime( history[index].startAt ?? "2023-12-22T07:16:56.000000Z"),style: CustomTextStyle.txt10Rrlitegrey,maxLines: 1,),
 

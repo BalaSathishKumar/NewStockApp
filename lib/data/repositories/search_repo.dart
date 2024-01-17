@@ -9,7 +9,8 @@ class SearchRepository {
   final ApiClient _client = ApiClient();
 
   Future<SearchModel?> searchapi( String searchparams) async {
-    final response = await _client.post(EndPointConstants.search,body: searchparams);
+    Map<String, String> searchkey = {"keyword": searchparams};
+    final response = await _client.post(EndPointConstants.search,body: searchkey);
 
     Logger.appLogs('searchcallBackResponse:: $response');
     if (response != null) {

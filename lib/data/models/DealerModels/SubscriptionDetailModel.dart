@@ -223,7 +223,7 @@ class SubscriptionData {
   int? id;
   int? userId;
   int? transactionId;
-  Null? subscriptionId;
+  String? subscriptionId;
   String? startAt;
   String? expireAt;
   int? status;
@@ -293,12 +293,12 @@ class Transactions {
   int? duration;
   String? durationType;
   String? transactionsId;
-  Null? subscriptionId;
-  Null? merchantSubscriptionId;
+  String? subscriptionId;
+  String? merchantSubscriptionId;
   String? merchantUserId;
-  Null? authWorkflowType;
+  dynamic? authWorkflowType;
   int? recurringCount;
-  Null? amountType;
+  dynamic? amountType;
   String? authRequestId;
   String? code;
   String? transactionId;
@@ -410,8 +410,8 @@ class User {
   String? photo;
   String? about;
   String? referalCode;
-  Null? emailVerifiedAt;
-  Null? mobileVerifiedAt;
+  dynamic? emailVerifiedAt;
+  dynamic? mobileVerifiedAt;
   String? authToken;
   String? fcmTokan;
   String? facebookId;
@@ -428,7 +428,7 @@ class User {
   bool? isMembership;
   int? isMembershipExist;
   String? merchantuserid;
-  int? rewardPoint;
+  dynamic? rewardPoint;
   String? statusHtml;
   int? age;
   int? professionid;
@@ -777,7 +777,7 @@ class Package {
   String? durationType;
   int? duration;
   int? interval;
-  Null? planId;
+  dynamic? planId;
   int? roleId;
   int? stockCount;
   int? status;

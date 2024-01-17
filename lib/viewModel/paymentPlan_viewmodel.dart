@@ -281,5 +281,39 @@ class PaymentPlanViewModel extends BaseViewModel {
     return null;
   }
 
+  Future<CheckoutResponseModel?> RemoveCouponApi({
+
+    required Function(String) onFailureRes,
+    required Function(CheckoutResponseModel?) onSuccessRes,
+    required Map<String,dynamic> removeparam
+  }) async {
+    //Loader State
+    setState(ViewState.busy);
+
+    try {
+      var data = await _paymentplanRepository.RemoveCouponapi(removeparam);
+      if (data != null) {
+        _checkoutResponseModel = data;
+        onSuccessRes(_checkoutResponseModel);
+        setState(ViewState.success);
+      }else{
+        //Failed
+        onFailureRes(Strings.somethingWentWrong);
+        //Failure State
+        setState(ViewState.idle);
+      }
+    } on AppException catch (appException) {
+      Logger.appLogs('errorType:: ${appException.type}');
+      Logger.appLogs('onFailure:: $appException');
+      //Common Error Handler
+      errorMsg = errorHandler(appException);
+      //Failed
+      onFailureRes(errorMsg);
+      //Idle / Failure State
+      setState(ViewState.idle);
+    }
+    return null;
+  }
+
 
 }

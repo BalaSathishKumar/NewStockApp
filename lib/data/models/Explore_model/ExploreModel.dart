@@ -83,6 +83,7 @@ class Stocks {
   String? userRating;
   String? saudaRating;
   String? statusText;
+  String? colorText;
   bool? wishList;
   DealerDetails? dealerDetails;
   List<CategoryButtons>? categoryButtons;
@@ -122,6 +123,7 @@ class Stocks {
         this.userRating,
         this.saudaRating,
         this.statusText,
+        this.colorText,
         this.dealerDetails,
         this.categoryButtons,
       this.wishList,
@@ -161,6 +163,7 @@ class Stocks {
     userRating = json['user_ratings'];
     saudaRating = json['sauda_ratings'];
     statusText = json['status_text'];
+    colorText = json['color_text'];
     dealerDetails = json['dealer_details'] != null ? new DealerDetails.fromJson(json['dealer_details']) : null;
     if (json['category_buttons'] != null) {
       categoryButtons = <CategoryButtons>[];
@@ -213,6 +216,7 @@ class Stocks {
     data['user_ratings'] = this.userRating;
     data['sauda_ratings'] = this.saudaRating;
     data['status_text'] = this.statusText;
+    data['color_text'] = this.colorText;
     if (this.dealerDetails != null) {
       data['dealer_details'] = this.dealerDetails!.toJson();
     }

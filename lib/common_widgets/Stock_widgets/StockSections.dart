@@ -22,7 +22,7 @@ class StocksSections extends StatelessWidget {
     required this.secondtitle,
     required this.optionslist,
     required this.imagetag,
-    required this.items,
+
     required this.devicewidth,
     required this.viewall,
     required this.ipostocks,
@@ -39,7 +39,7 @@ class StocksSections extends StatelessWidget {
   final String secondtitle;
   final String imagetag;
   final List<Category> optionslist;
-  final List<ListItem> items;
+
   final double devicewidth;
   final String viewall;
   final List<IpoFpo>? ipostocks;
@@ -312,18 +312,15 @@ class StocksSections extends StatelessWidget {
                                         radius: 30,
                                         backgroundImage:
                                         //AssetImage( items[index].imageUrl,)
-                                        NetworkImage(
-                                            Filterdata?[index].stock
-                                                ?.photoUrl ??
-                                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8MUlZWpRSwcRsyUrIByKJ3tPpxud1BLcq5CGwR7aB&s"
+                                        NetworkImage(Filterdata?[index].stock?.photoUrl ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8MUlZWpRSwcRsyUrIByKJ3tPpxud1BLcq5CGwR7aB&s"
                                           //  items[index].imageUrl,
                                         ),
                                       )) : Container(
                                     //    color: Colors.yellow,
-                                      child: CircleAvatar(
+                                      child: const CircleAvatar(
                                         radius: 30,
                                         backgroundImage: AssetImage(
-                                          items[index].imageUrl,),
+                                         LocalPNGImages.placeholder),
                                         /*  NetworkImage(
                                           items[index].imageUrl,
                                         ),*/

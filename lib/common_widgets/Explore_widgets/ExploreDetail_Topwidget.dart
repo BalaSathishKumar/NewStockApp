@@ -314,7 +314,10 @@ void ShowDetailsPopup(context, String subtitle1, String title1) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 50),
           child: Container(
-            color: Appcolors.white,
+            decoration: BoxDecoration(
+              color: Appcolors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(18.0),
               child: SingleChildScrollView(child: Text(title1)),

@@ -634,16 +634,14 @@ class _NewKycUserState extends State<NewKycUser> {
                                             "id_proof_type": _userProofType,
                                           };
                                           if(!isKycUpdate) {
-                                            if (_image != null &&
-                                                _aadhar != null &&
-                                                _pancard != null) {
+                                            if (_aadhar != null && _pancard != null) {
                                               //     checkFields();
                                               //  if(_userresidence != "" && _userPAN != "" && _userCurrentAdd != "" && _userPermAdd != "" && _userProofType != ""){
                                               _commonProvider.IsChecked
                                                   ? _registerViewModel.Kycapi(
                                                   onFailureRes: onFailureRes,
                                                   onSuccessRes: onSuccessRes,
-                                                  propic: _image!,
+                                                  propic: _image,
                                                   idproofpic: _aadhar!,
                                                   pancard: _pancard!,
                                                   cancelledcheque:

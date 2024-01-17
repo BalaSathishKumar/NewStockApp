@@ -5,6 +5,8 @@ import '../config/locator.dart';
 import '../constants/strings.dart';
 import '../data/models/Explore_model/ExploreModel.dart';
 import '../data/models/Explore_model/ExplorePerformModel.dart';
+
+import '../data/models/Explore_model/viewAllModel.dart';
 import '../data/repositories/explore_repo.dart';
 
 import '../utils/common_functions.dart';
@@ -18,12 +20,15 @@ class ExploreViewModel extends BaseViewModel {
 
   //Model
   ExploreModel? _exploreModel;
+  viewAllModel? _viewallModel;
   PerformDetailModel? _PFDexploreModel;
   ExplorePerformModel? _explorePerformModel;
  // Set<String> uniqueItems = Set<String>();
    List<Stocks> ExploreStocksVM = [];
+   List<Stocks>? ViewallStock = [];
   var set = Set<Stocks>();
   ExploreModel? get exploreModel => _exploreModel;
+  viewAllModel? get ViewAllModel => _viewallModel;
   PerformDetailModel? get PFDexploreModel => _PFDexploreModel;
   ExplorePerformModel? get explorePerformModel => _explorePerformModel;
 
@@ -46,7 +51,8 @@ class ExploreViewModel extends BaseViewModel {
     bool? iSsearchclick,
   }) async {
     //Loader State
-    setState(ViewState.busy);
+    print('page no::: ${PageNo}');
+    if(PageNo == "1")setState(ViewState.busy);
 
     try {
       var data = await _exploreRepository.explporeapi(catID,PageNo,keyword ?? "",pricemin ?? "",pricemax ?? "",sortbyprice ?? "",sortbyuserrating ?? "",sortbysaudarating ?? "",type??"",top ?? "",isFilter ?? false,iSsearchclick ?? false);
@@ -141,6 +147,53 @@ class ExploreViewModel extends BaseViewModel {
     }
     return null;
   }
+
+  Future<ExploreModel?> viewallapi({
+
+    required Function(String) onFailureRes,
+    required Function(viewAllModel?) onSuccessRes,
+    required String title,
+    required String pageNo
+  }) async {
+    //Loader State
+    setState(ViewState.busy);
+
+    try {
+      var data = await _exploreRepository.viewAllapi(title,pageNo);
+      if (data != null) {
+        _viewallModel = data;
+      //  ViewallStock?.clear();
+        for (VAStocks viewallstocks in _viewallModel?.data?.stocks ?? []) {
+          var viewallStock = viewallstocks.stock;
+          if( viewallStock != null){
+            ViewallStock?.add(viewallStock);
+          }
+          print('ViewallStock.length ${ViewallStock?.length}');
+        }
+
+        //Success State
+        onSuccessRes(_viewallModel);
+        setState(ViewState.success);
+      }else{
+        //Failed
+        onFailureRes(Strings.somethingWentWrong);
+        //Failure State
+        setState(ViewState.idle);
+      }
+    } on AppException catch (appException) {
+      Logger.appLogs('errorType:: ${appException.type}');
+      Logger.appLogs('onFailure:: $appException');
+      //Common Error Handler
+      errorMsg = errorHandler(appException);
+      //Failed
+      onFailureRes(errorMsg);
+      //Idle / Failure State
+      setState(ViewState.idle);
+    }
+    return null;
+  }
+
+
 
 /*
 

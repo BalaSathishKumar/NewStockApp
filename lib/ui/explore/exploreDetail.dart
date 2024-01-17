@@ -20,6 +20,7 @@ import '../../common_widgets/Explore_widgets/ExploreDetail_Topwidget.dart';
 import '../../common_widgets/Explore_widgets/FinancialInfo.dart';
 import '../../common_widgets/Explore_widgets/QuickStats.dart';
 import '../../common_widgets/Stock_widgets/StockSections.dart';
+import '../../common_widgets/alert_widgets/error_dialog.dart';
 import '../../common_widgets/button_widgets/LGgRoundedBtn.dart';
 import '../../common_widgets/button_widgets/ParallelButtons.dart';
 import '../../common_widgets/loading_widgets/loader.dart';
@@ -29,6 +30,7 @@ import '../../constants/constant.dart';
 import '../../constants/local_images.dart';
 import '../../data/models/Explore_model/ExploreModel.dart';
 import '../../data/models/Insights_model/CatBasedBlogsModel.dart';
+import '../../data/models/dashboard_model/ProfileResponseModel.dart';
 import '../../utils/common_functions.dart';
 import '../../viewModel/CommonProvider.dart';
 import '../../viewModel/explore_detail_view_model.dart';
@@ -36,7 +38,12 @@ import '../../viewModel/explore_view_model.dart';
 import '../Advisors/AdvisorReviewPage.dart';
 import '../Dealers/DealerVerifyPending.dart';
 import '../Dealers/DonePage.dart';
+import '../Dealers/select_payment.dart';
+import '../Register/RegandKyc.dart';
 import '../home/StockHome.dart';
+import '../home/homepage.dart';
+import '../kyc/KYC_Advisor.dart';
+import '../kyc/KYC_Dealer.dart';
 import 'SaInsightsandAdSpeak.dart';
 import 'exploreFilter.dart';
 
@@ -122,8 +129,9 @@ class _ExploreDetailState extends State<ExploreDetail>
                   },
                   onPressSend: () {
                     print('send stock detail');
+                  //  Hi Welcome to sauda! "App link " "Stock name"
                     final box = context.findRenderObject() as RenderBox?;
-                    Share.share("Hi, Stock name : ${_selectedstocks?.name ?? ""}",
+                    Share.share("Hi Welcome to sauda! ${_selectedstocks?.name ?? ""}",
                         subject: "",
                         sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
                 },
@@ -133,170 +141,207 @@ class _ExploreDetailState extends State<ExploreDetail>
               body: _exploredetailViewModel.state == ViewState.busy?Loader():Container(
                 height: deviceheight,
                 width: devicewidth,
-                child: Stack(children: [
-                  SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          ExploreDetailTopDetails(selectedstocks: _selectedstocks,isAdvisorReview: false),
-                          ExBuySell(devicewidth: devicewidth,selectedstocks: _selectedstocks),
-                          showAdvisorReview(devicewidth: devicewidth,deviceheight: deviceheight,selectedstocks: _selectedstocks),  //Only for advisor
-                          QuickStats(),
-                          Consumer<ExploreDetailViewModel>(
-                              builder: (context, expDetaildata, child) {
-                                return DynamicContent(
-                                    devicewidth: devicewidth,
-                                    metaModeldata: expDetaildata.exploredetailModel?.stocks?.metaData ?? []
-                                );}
-                          ),
-                          //Tentative(),
-                          Consumer<ExploreDetailViewModel>(
-                              builder: (context, expDetaildata, child) {
-                                return
-                                  expDetaildata.exploredetailModel?.stocks?.financialInformation != null  &&
-                                      expDetaildata.exploredetailModel!.stocks!.financialInformation!.isNotEmpty ? FinancialInfo():Container();}),
-                          Container(
-                            height: 350,
-                            width: devicewidth,
-                            child: CommonTabLayout(
-                              IsExplore: false,
-                              DynamicTabs: [],
-                              tabTitles: [
-                                'Sauda Insights',
-                                'Advisor Speak',
-                              ],
-                              tabContents: [
-                                ExploreDetailTabContent(),
-                                ExploreAdvisorSpeak(),
-                              ],
-                              tabController: _tabController,
+                child:  Consumer<ProfileViewModel>(
+          builder: (context,proviledata,child) {
+                 return Stack(children: [
+                    SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ExploreDetailTopDetails(selectedstocks: _selectedstocks,isAdvisorReview: false),
+                            ExBuySell(devicewidth: devicewidth,selectedstocks: _selectedstocks),
+                            showAdvisorReview(devicewidth, deviceheight, _selectedstocks,proviledata.profileResponseModel),  //Only for advisor
+                            QuickStats(),
+                            Consumer<ExploreDetailViewModel>(
+                                builder: (context, expDetaildata, child) {
+                                  return DynamicContent(
+                                      devicewidth: devicewidth,
+                                      metaModeldata: expDetaildata.exploredetailModel?.stocks?.metaData ?? []
+                                  );}
                             ),
-                          ),
-                          Consumer<ExploreDetailViewModel>(
-                           builder: (context, expDetaildata, child) {
-                             return  setBtnVisibility(expDetaildata.exploredetailModel?.stocks?.saudaInsights,expDetaildata.exploredetailModel?.stocks?.advisorReviews)? GestureDetector(
-                               onTap: () {
-                                 print("Sauda Insights ${ _commonProvider.IsSaudaInsights}   ${ _commonProvider.IsAdvisorsSpeak}");
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => SaInsightsAdSpeakDetail()));
-                               },
-                               child: Container(
-                                   height: 200,
-                                   width: devicewidth,
-                                   color: Colors.white,
-                                   child: Column(
-                                     children: [
-                                       Container(
-                                           height: 80,
-                                           width: devicewidth,
-                                           child: Padding(
-                                             padding: const EdgeInsets.all(8.0),
-                                             child: Row(
-                                               mainAxisAlignment: MainAxisAlignment.center,
-                                               children: [
-                                                 Container(
-                                                   width: devicewidth / 2,
-                                                   child: Padding(
-                                                     padding: const EdgeInsets
-                                                         .all(8.0),
-                                                     child: LgRoundedBtn(
-                                                       height: 100,
-                                                       width: 150,
-                                                       text: 'Discover More',
-                                                       iconData: Icons
-                                                           .arrow_forward,
-                                                       backgroundColor:
-                                                       Appcolors.txtlitegreen2,
-                                                       textColor: Appcolors
-                                                           .black,
+                            //Tentative(),
+                            Consumer<ExploreDetailViewModel>(
+                                builder: (context, expDetaildata, child) {
+                                  return
+                                    expDetaildata.exploredetailModel?.stocks?.financialInformation != null  &&
+                                        expDetaildata.exploredetailModel!.stocks!.financialInformation!.isNotEmpty ? FinancialInfo():Container();}),
+                            Container(
+                              height: 350,
+                              width: devicewidth,
+                              child: CommonTabLayout(
+                                IsExplore: false,
+                                DynamicTabs: [],
+                                tabTitles: [
+                                  'Sauda Insights',
+                                  'Advisor Speak',
+                                ],
+                                tabContents: [
+                                  ExploreDetailTabContent(),
+                                  ExploreAdvisorSpeak(),
+                                ],
+                                tabController: _tabController,
+                              ),
+                            ),
+                            Consumer<ExploreDetailViewModel>(
+                             builder: (context, expDetaildata, child) {
+                               return  setBtnVisibility(expDetaildata.exploredetailModel?.stocks?.saudaInsights,expDetaildata.exploredetailModel?.stocks?.advisorReviews)? GestureDetector(
+                                 onTap: () {
+                                   print("Sauda Insights ${ _commonProvider.IsSaudaInsights}   ${ _commonProvider.IsAdvisorsSpeak}");
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => SaInsightsAdSpeakDetail()));
+                                 },
+                                 child: Container(
+                                     height: 200,
+                                     width: devicewidth,
+                                     color: Colors.white,
+                                     child: Column(
+                                       children: [
+                                         Container(
+                                             height: 80,
+                                             width: devicewidth,
+                                             child: Padding(
+                                               padding: const EdgeInsets.all(8.0),
+                                               child: Row(
+                                                 mainAxisAlignment: MainAxisAlignment.center,
+                                                 children: [
+                                                   Container(
+                                                     width: devicewidth / 2,
+                                                     child: Padding(
+                                                       padding: const EdgeInsets
+                                                           .all(8.0),
+                                                       child: LgRoundedBtn(
+                                                         height: 100,
+                                                         width: 150,
+                                                         text: 'Discover More',
+                                                         iconData: Icons
+                                                             .arrow_forward,
+                                                         backgroundColor:
+                                                         Appcolors.txtlitegreen2,
+                                                         textColor: Appcolors
+                                                             .black,
+                                                       ),
                                                      ),
                                                    ),
-                                                 ),
-                                               ],
-                                             ),
-                                           )),
+                                                 ],
+                                               ),
+                                             )),
 
-                                     ],
-                                   )),
-                             ):SizedBox.shrink();
-                           }
-                          )
-                        ],
-                      )
+                                       ],
+                                     )),
+                               ):SizedBox.shrink();
+                             }
+                            )
+                          ],
+                        )
 
-                  ),
-                  Consumer<ProfileViewModel>(
-                    builder: (context,proviledata,child) {
-                      return _selectedstocks?.buyingPrice == "0" && _selectedstocks?.sellingPrice == "0"? SizedBox.shrink():Align(
-                        alignment: Alignment.bottomCenter,
-                        child: ParallelButtons(
-                            btn1clr: Appcolors.splashbgcolor,
-                            btn1txtclr: Appcolors.black,
-                            btn2clr: Appcolors.black,
-                            btn2txtclr: Appcolors.white,
-                            fontFamily: "Roboto-Regular",
-                            fontSize: 14,
-                            devicewidth: devicewidth,
-                            btn1name: "BUY",
-                            btn2name: "SELL",
-                            btn1onpressed: () {
-                              Provider.of<buystockbutn>(context, listen: false).setBuy(true);
-                              Provider.of<buystockbutn>(context, listen: false).setsell(false);
-                              if (Constant.userRoll != "Guest" && proviledata.profileResponseModel?.user?.status == 3) {
-                                var isMember = proviledata.profileResponseModel?.user?.isMemberShip;
-                               if(isMember != null && isMember){
-                                 showCustomBottomSheet(context,favdata.exploredetailModel?.stocks);
-                               }else {
-                                 showToast("Your Subscription Membership is not active.");
-                               }
+                    ),
+                    Consumer<ProfileViewModel>(
+                      builder: (context,proviledata,child) {
+                        return _selectedstocks?.buyingPrice == "0" && _selectedstocks?.sellingPrice == "0"? SizedBox.shrink():Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ParallelButtons(
+                              btn1clr: Appcolors.splashbgcolor,
+                              btn1txtclr: Appcolors.black,
+                              btn2clr: Appcolors.black,
+                              btn2txtclr: Appcolors.white,
+                              fontFamily: "Roboto-Regular",
+                              fontSize: 14,
+                              devicewidth: devicewidth,
+                              btn1name: "BUY",
+                              btn2name: "SELL",
+                              btn1onpressed: () {
+                                Provider.of<buystockbutn>(context, listen: false).setBuy(true);
+                                Provider.of<buystockbutn>(context, listen: false).setsell(false);
+                                if (Constant.userRoll != "Guest" && proviledata.profileResponseModel?.user?.status == 3) {
+                                  var isMember = proviledata.profileResponseModel?.user?.isMemberShip;
+                                 if(isMember != null && isMember){
+                                   showCustomBottomSheet(context,favdata.exploredetailModel?.stocks);
+                                 }else {
+                                  // showToast("Your Subscription Membership is not active.");
+                                   Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(
+                                       onPressed: (){
+                                     if (Constant.userRoll != "Users") {
+                                       Navigator.push(context, MaterialPageRoute(builder: (context)=> (SelectPayment())));
+                                     }
+                                       })));
+                                 }
 
-                              } else {
-                               // showToast("Please Login to buy.");
-                               if (Constant.userRoll == "Guest") {
+                                } else {
+                                 // showToast("Please Login to buy.");
+                                 if (Constant.userRoll == "Guest") {
 
-                                 errorAlert(context, "Please Login",onBackPress: (){
-                                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => WelcomePage()), (route) => false);
-                                 });
+                                   showDialog(
+                                       context: context,
+                                       builder: (context) => ErrorDialog(
+                                           titletxt: "Login required",
+                                           errorMsg: "Your are in Guest Mode. please login to buy/sell",
+                                           onBackPress: () {
+                                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => WelcomePage()), (route) => false);
+                                           }));
 
 
-                              }else{
-                                 Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(onPressed: (){
-                                  if (Constant.userRoll == "Users") {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> (NewKycUser(IsKycUpdate: true,))));
-                                  }
-
-                                 })));
-                               }
-                              }
-                            },
-                            btn2onpressed: () {
-                              Provider.of<buystockbutn>(context, listen: false).setBuy(false);
-                              Provider.of<buystockbutn>(context, listen: false).setsell(true);
-                              if (Constant.userRoll != "Guest" && proviledata.profileResponseModel?.user?.status == 3) {
-
-                                var isMember = proviledata.profileResponseModel?.user?.isMemberShip;
-                                if(isMember != null && isMember){
-                                  showCustomBottomSheet(context,favdata.exploredetailModel?.stocks);
-                                }else {
-                                  showToast("Your Subscription Membership is not active.");
-                                }
-                              } else {
-                              //  showToast("Please Login to sell.");
-                                if (Constant.userRoll == "Guest") {
-                                  errorAlert(context, "Please Login",onBackPress: (){
-                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => WelcomePage()), (route) => false);
-                                  });
                                 }else{
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(onPressed: (){
+                                   Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(onPressed: (){
                                     if (Constant.userRoll == "Users") {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> (NewKycUser(IsKycUpdate: true,))));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegiterAndKyc()));
+                                    }else if(Constant.userRoll == "Brokers"){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegiterAndKyc()));
+                                    }else{
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegiterAndKyc()));
                                     }
-                                  },)));
+
+                                   })));
+                                 }
                                 }
-                              }
-                            }),
-                      );
-                    }
-                  )
-                ]),
+                              },
+                              btn2onpressed: () {
+                                Provider.of<buystockbutn>(context, listen: false).setBuy(false);
+                                Provider.of<buystockbutn>(context, listen: false).setsell(true);
+                                if (Constant.userRoll != "Guest" && proviledata.profileResponseModel?.user?.status == 3) {
+
+                                  var isMember = proviledata.profileResponseModel?.user?.isMemberShip;
+                                  if(isMember != null && isMember){
+                                    showCustomBottomSheet(context,favdata.exploredetailModel?.stocks);
+                                  }else {
+                                   // showToast("Your Subscription Membership is not active.");
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(
+                                        onPressed: (){
+                                          if (Constant.userRoll != "Users") {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=> (SelectPayment())));
+                                          }
+                                        })));
+                                  }
+                                }
+                                else {
+                                //  showToast("Please Login to sell.");
+                                  if (Constant.userRoll == "Guest") {
+
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => ErrorDialog(
+                                            titletxt: "Login required",
+                                            errorMsg: "Your are in Guest Mode. please login to buy/sell",
+                                            onBackPress: () {
+                                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => WelcomePage()), (route) => false);
+                                            }));
+
+                                  }
+                                  else{
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(onPressed: (){
+                                      if (Constant.userRoll == "Users") {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => RegiterAndKyc()));
+                                      }else if(Constant.userRoll == "Brokers"){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => RegiterAndKyc()));
+                                      }else{
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => RegiterAndKyc()));
+                                      }
+                                    },)));
+                                  }
+                                }
+                              }),
+                        );
+                      }
+                    )
+                  ]);}
+                ),
               ));
 
         },
@@ -343,14 +388,36 @@ class _ExploreDetailState extends State<ExploreDetail>
   onFailureRes(String p1) {
   }
 
-  showAdvisorReview({required double devicewidth, required double deviceheight, Stocks? selectedstocks}) {
+  showAdvisorReview( double devicewidth,  double deviceheight, Stocks? selectedstocks, ProfileResponseModel? profiledata) {
+    var isStatus = profiledata?.user?.status;
+    var isMember = profiledata?.user?.isMemberShip;
     if(Constant.userRoll == "Advisors"){
 
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>AdvisorReviewPage( selectedstocks: selectedstocks,)));
+
+
+            if (isStatus == 3){
+              if(isMember != null && isMember){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AdvisorReviewPage( selectedstocks: selectedstocks,)));
+              }else{
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(
+                    onPressed: (){
+                      if (Constant.userRoll != "Users") {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> (SelectPayment())));
+                      }
+                    })));
+              }
+
+            } else {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => DealerVerifyPending(
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => RegiterAndKyc()));
+                  })));
+            }
+
           },
           child: Container(
             height: 182,
@@ -462,7 +529,8 @@ return Container();
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DonePage(purchaseType: buy?"Buy" : "Sell",)), (route) => false);
         },
       );
-    }else if(stocksViewData?.category?.categoryName == "Mutual Funds"){
+    }
+    else if(stocksViewData?.category?.categoryName == "Mutual Funds"){
       return MutualForm(
         selectedstocks: _selectedstocks,
         isExplore: widget.isExplore,

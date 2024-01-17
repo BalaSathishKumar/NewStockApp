@@ -4,13 +4,15 @@ import 'package:provider/provider.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/local_images.dart';
-import '../../data/models/AdvisorModels/ConsultationListModel.dart';
+import 'package:base_flutter_provider_project/data/models/User_Directory_model/ChatUsersList.dart';
 import '../../data/models/dashboard_model/DashboardResponseModel.dart';
+import '../../ui/home/StockHome.dart';
 import '../../ui/home/homepage.dart';
 import '../../utils/common_functions.dart';
 import '../../utils/common_textstyles.dart';
 import '../../viewModel/dashboard_view_model.dart';
 import '../dropdown_widgets/common_dropdown.dart';
+import 'TopBrokerDetailPage.dart';
 
 class TopBrokers extends StatelessWidget {
   const TopBrokers({
@@ -19,22 +21,26 @@ class TopBrokers extends StatelessWidget {
     required this.secondtitle,
     required this.optionslist,
     required this.imagetag,
-    required this.items,
+
     required this.devicewidth,
+    required this.devicehgt,
     required this.topbrokers,
     required this.serviceyear,
-    required this.IsViewPressed
+    required this.IsViewPressed,
+
   });
 
   final String firsttitle;
   final String secondtitle;
   final String imagetag;
   final List<String> optionslist;
-  final List<ListItem> items;
+
   final List<FeaturedBroker>? topbrokers;
   final double devicewidth;
+  final double devicehgt;
   final List<String?> serviceyear;
   final VoidCallback IsViewPressed;
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,118 +68,124 @@ class TopBrokers extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  height: 280,
-                //  color: Colors.green.shade50,
+                  height: 290,
+                 // color: Colors.green.shade50,
                   child: ListView.builder(
                     // itemCount: items.length,
                       itemCount: topbrokers?.length ?? 0,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
 
-                     /*     if(item.user.userMetaData == "service_year"){
-                            // print('service year ${item.value}');
-                            serviceyears.add(item.value);
-                            print('service year ${serviceyears.length}');
-                          }
-                        }*/
+                        return GestureDetector(
+                       //   onTap: onFeaturedBroPressed(topbrokers?[index].user),
+                          onTap: (){
+                            print('selectedBroker:: ${topbrokers?[index].user?.name }');
 
-                    return Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  Container(
-                                      height: 200,
+                            showBrokerBottomSheet(
+                                context,
+                              topbrokers?[index],
+                             devicehgt,devicewidth,);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                        height: 200,
+                                        width: 130,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(6),
+                                                topRight: Radius.circular(30),
+                                                bottomRight: Radius.circular(30),
+                                                bottomLeft: Radius.circular(30)),
+                                            image: DecorationImage(
+                                              image: topbrokers?[index].user?.photoUrl != null ?
+                                              NetworkImage(
+                                                topbrokers?[index].user?.photoUrl ?? "",
+                                              ) : PlaceholderImage(),
+                                              //fit: BoxFit.fill
+                                              fit: BoxFit.fill,
+                                            )),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            buildSizedBox(height: 20, width: 10),
+                                            /*     Image.network(
+                                          items[index].imageUrl,
+
+                                          fit: BoxFit.cover,
+                                        ),*/
+                                          ],
+                                        )),
+                                    Container(
+                                   //   height: 200,
                                       width: 130,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(6),
-                                              topRight: Radius.circular(30),
-                                              bottomRight: Radius.circular(30),
-                                              bottomLeft: Radius.circular(30)),
-                                          image: DecorationImage(
-                                            image: topbrokers?[index].user?.photoUrl != null ?
-                                            NetworkImage(
-                                              topbrokers?[index].user?.photoUrl ?? "",
-                                            ) : PlaceholderImage(),
-                                            //fit: BoxFit.fill
-                                            fit: BoxFit.fill,
-                                          )),
+
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          buildSizedBox(height: 20, width: 10),
-                                          /*     Image.network(
-                                        items[index].imageUrl,
-
-                                        fit: BoxFit.cover,
-                                      ),*/
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0, top: 8),
+                                            child: Container(
+                                              height: 24,
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                  BorderRadius.circular(60)),
+                                              child: FittedBox(
+                                                fit: BoxFit.contain,
+                                                child: Text(
+                                                    topbrokers?[index].user?.professionName ?? "",
+                                                    //items[index].toprated,
+                                                    style: CustomTextStyle
+                                                        .txt10Rmtxtblk,
+                                                    maxLines: 1,
+                                                    softWrap: false,
+                                                    overflow: TextOverflow
+                                                        .ellipsis),
+                                              ),
+                                            ),
+                                          )
                                         ],
-                                      )),
-                                  Container(
-                                    height: 200,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Container(
+                                    // color: Colors.red,
                                     width: 130,
-
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 5.0, top: 8),
-                                          child: Container(
-                                            height: 24,
-                                            padding: EdgeInsets.all(5),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                BorderRadius.circular(60)),
-                                            child: FittedBox(
-                                              fit: BoxFit.contain,
-                                              child: Text(
-                                                  topbrokers?[index].user?.professionName ?? "",
-                                                  //items[index].toprated,
-                                                  style: CustomTextStyle
-                                                      .txt10Rmtxtblk,
-                                                  maxLines: 1,
-                                                  softWrap: false,
-                                                  overflow: TextOverflow
-                                                      .ellipsis),
-                                            ),
+                                        buildSizedBox(height: 10, width: 0),
+                                        Container(
+                                       //       color: Colors.yellow,
+                                          child: Text(
+                                            topbrokers?[index].user?.name ?? "",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: CustomTextStyle
+                                                .txt14Rbtxttbblacktxt,
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                //   color: Colors.red,
-                                  width: 130,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      buildSizedBox(height: 10, width: 0),
-                                      Container(
-                                     //       color: Colors.yellow,
-                                        child: Text(
-                                          topbrokers?[index].user?.name ?? "",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: CustomTextStyle
-                                              .txt14Rbtxttbblacktxt,
                                         ),
-                                      ),
-                                      buildSizedBox(height: 5, width: 0),
-                                      Divider(
-                                        color: Appcolors.txtlitegreen2,
-                                        height: 5,
-                                        thickness: 2,
-                                      ),
-                                      buildStat(items[index].stattxt, items[index].statyears,serviceyear, topbrokers?[index].user?.userMetaData),
-                                    ],
-                                  ))
-                            ],
+                                        buildSizedBox(height: 5, width: 0),
+                                        Divider(
+                                          color: Appcolors.txtlitegreen2,
+                                          height: 5,
+                                          thickness: 2,
+                                        ),
+                                        buildStat("Experience:",  topbrokers?[index].user?.userMetaData),
+                                        buildStat("Specaiality:",  topbrokers?[index].user?.userMetaData),
+
+                                      ],
+                                    ))
+                              ],
+                            ),
                           ),
                         );
                       }),
@@ -248,41 +260,85 @@ class TopBrokers extends StatelessWidget {
         });
   }
 
-   buildStat(String stattitle, String stateresponse, List<String?> serviceyear, List<UserMetaData>? userMetaData,  ) {
+   buildStat(String stattitle,  List<UserMetaData>? userMetaData,  ) {
    // print('userMetaData list ${userMetaData?.length}');
 
-    for(UserMetaData usermeta in userMetaData ?? []){
-     // print('usermeta.key == ${usermeta.key}');
-      if(usermeta.key == "service_year"){
-        return Container(
-          height: 20,
-          width: 130,
-          // color: Colors.blue,
-          child: Row(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Text(
-                      stattitle,
-                      style: CustomTextStyle.txt12Rltxtlitegrey2,
-                    ),
-                  )),
-              Expanded(
-                  flex: 3,
-                  child: Text(
-                    usermeta.value ?? "",
-                    style: CustomTextStyle.txt12Rrtxtgry2,
-                  ))
-            ],
-          ),
-        );
-      }
+     if(stattitle == "Specaiality:"){
+       for(UserMetaData usermeta in userMetaData ?? []){
+         // print('usermeta.key == ${usermeta.key}');
+         if(usermeta.key == "expertise"){  //expertise
+           return Container(
+             height: 20,
+             width: 130,
+             // color: Colors.blue,
+             child: Row(
+               children: [
+                 Expanded(
+                     flex: 1,
+                     child: Padding(
+                       padding: const EdgeInsets.only(left: 5.0),
+                       child: Text(
+                         stattitle,
+                         style: CustomTextStyle.txt12Rltxtlitegrey2,
+                       ),
+                     )),
+                 Expanded(
+                     flex: 1,
+                     child: Padding(
+                       padding: const EdgeInsets.only(left: 5.0),
+                       child: Text(
+                         usermeta.value ?? "",
+                         style: CustomTextStyle.txt12Rrtxtgry2,
+                       ),
+                     ))
+               ],
+             ),
+           );
+         }  //expertise
 
-    }
+         }
+     }else{
+       for(UserMetaData usermeta in userMetaData ?? []){
+         // print('usermeta.key == ${usermeta.key}');
+         if(usermeta.key == "service_year"){  //expertise
+           return Container(
+             height: 20,
+             width: 130,
+             // color: Colors.blue,
+             child: Row(
+               children: [
+                 Expanded(
+                     flex: 1,
+                     child: Padding(
+                       padding: const EdgeInsets.only(left: 5.0),
+                       child: Text(
+                         stattitle,
+                         style: CustomTextStyle.txt12Rltxtlitegrey2,
+                       ),
+                     )),
+                 Expanded(
+                     flex: 1,
+                     child: Padding(
+                       padding: const EdgeInsets.only(left: 5.0),
+                       child: Text(
+                         usermeta.value ?? "",
+                         style: CustomTextStyle.txt12Rrtxtgry2,
+                       ),
+                     ))
+               ],
+             ),
+           );
+         }
+
+
+       }
+     }
+     }
+
+
+
   }
-}
+
 
 class DropOptionsS with ChangeNotifier {
   String _dropoptiions = "Stock Category";

@@ -52,7 +52,7 @@ class UserData {
   String? city;
   String? state;
   int? professionId;
-  Null? customerId;
+  dynamic customerId;
   String? photo;
   String? about;
   String? referalCode;

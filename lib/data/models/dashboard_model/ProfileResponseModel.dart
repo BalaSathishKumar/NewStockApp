@@ -55,6 +55,7 @@ class User {
   String? reviewMessage;
   bool? isMemberShip;
   String? roleName;
+  String? statusText;
   String? professionName;
   String? photoUrl;
   List<IdProof>? idProof;
@@ -86,6 +87,7 @@ class User {
         this.reviewMessage,
         this.isMemberShip,
         this.roleName,
+        this.statusText,
         this.professionName,
         this.photoUrl,
         this.idProof,
@@ -116,6 +118,7 @@ class User {
     reviewMessage = json['review_message'];
     isMemberShip = json['is_membership'];
     roleName = json['role_name'];
+    statusText = json['status_text'];
     professionName = json['profession_name'];
     photoUrl = json['photo_url'];
     if (json['id_proof'] != null) {
@@ -164,6 +167,7 @@ class User {
     data['review_message'] = this.reviewMessage;
     data['is_membership'] = this.isMemberShip;
     data['role_name'] = this.roleName;
+    data['status_text'] = this.statusText;
     data['profession_name'] = this.professionName;
     data['photo_url'] = this.photoUrl;
     if (this.idProof != null) {

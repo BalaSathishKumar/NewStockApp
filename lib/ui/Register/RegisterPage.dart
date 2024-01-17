@@ -68,6 +68,7 @@ class _RegisterPageState extends State<RegisterPage> {
   late UserNameProvider _userNameProvider;
   late UserEmailProvider _userEmailProvider;
   late ProfessionViewModel _professionViewModel;
+  late GoogleSignInProvider _googlesignProvider;
   bool get isProEdit => widget.IsProfileEdit;
   String? _setTime, _setDate;
 
@@ -263,6 +264,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _userNameProvider = Provider.of<UserNameProvider>(context, listen: false);
     _userEmailProvider = Provider.of<UserEmailProvider>(context, listen: false);
     _professionViewModel = Provider.of<ProfessionViewModel>(context, listen: false);
+    _googlesignProvider = Provider.of<GoogleSignInProvider>(context, listen: false);
 
     if(isProEdit){
       print('proedit ${_profileViewModel.profileResponseModel?.user?.name}');
@@ -275,33 +277,69 @@ class _RegisterPageState extends State<RegisterPage> {
       });
 
     }else{
-      _useragecontroller = TextEditingController(text: _userAgeProvider._userageValue);
-      _usernamecontroller = TextEditingController(text: _userNameProvider._usernameValue);
-      _useremailcontroller = TextEditingController(text: _userEmailProvider._useremailValue);
-      _userfathernamecontroller = TextEditingController(text: _userAgeProvider._userfathername);
-      _userdobcontroller = TextEditingController(text: _userAgeProvider._userfathername);
-      _useraboutcontroller = TextEditingController(text: _userAgeProvider._userabout);
+
+      if(_googlesignProvider.user != null){
+        _useragecontroller = TextEditingController(text: _userAgeProvider._userageValue);
+        _usernamecontroller = TextEditingController(text: _googlesignProvider.user?.displayName ?? "");
+        _useremailcontroller = TextEditingController(text: _googlesignProvider.user?.email ?? "");
+        _userfathernamecontroller = TextEditingController(text: _userAgeProvider._userfathername);
+        _userdobcontroller = TextEditingController(text: _userAgeProvider._userfathername);
+        _useraboutcontroller = TextEditingController(text: _userAgeProvider._userabout);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _userNameProvider.setUserNameValue(_googlesignProvider.user?.displayName ?? "");
+          _userEmailProvider.setUserMailValue(_googlesignProvider.user?.email ?? "");
+
+          _professionViewModel.ProfessionList.clear();
+          _professionViewModel.StateList.clear();
+          _professionViewModel.CityList.clear();
+
+          _professionViewModel.setUserProfession(null);
+          _professionViewModel.setUserCity(null);
+          _professionViewModel.setUserState(null);
+
+          _userAgeProvider.setUserRollSelect(false);
+          _userAgeProvider.setUserGenderSelect(false);
+          _userAgeProvider.setUserProfessionSelect(false);
+          _userAgeProvider.setUserStateSelect(false);
+          _userAgeProvider.setUserCitySelect(false);
+          _userAgeProvider.setUserDOBselect(false);
+
+          _professionViewModel.professionapi(onFailureRes: onProfFailureRes, onSuccessRes: onProfSuccessRes);
+
+        });
 
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _professionViewModel.ProfessionList.clear();
-        _professionViewModel.StateList.clear();
-        _professionViewModel.CityList.clear();
-
-       _professionViewModel.setUserProfession(null);
-        _professionViewModel.setUserCity(null);
-        _professionViewModel.setUserState(null);
-
-        _userAgeProvider.setUserRollSelect(false);
-        _userAgeProvider.setUserGenderSelect(false);
-        _userAgeProvider.setUserProfessionSelect(false);
-        _userAgeProvider.setUserStateSelect(false);
-        _userAgeProvider.setUserCitySelect(false);
-        _userAgeProvider.setUserDOBselect(false);
+      }else{
+        _useragecontroller = TextEditingController(text: _userAgeProvider._userageValue);
+        _usernamecontroller = TextEditingController(text: _userNameProvider._usernameValue);
+        _useremailcontroller = TextEditingController(text: _userEmailProvider._useremailValue);
+        _userfathernamecontroller = TextEditingController(text: _userAgeProvider._userfathername);
+        _userdobcontroller = TextEditingController(text: _userAgeProvider._userfathername);
+        _useraboutcontroller = TextEditingController(text: _userAgeProvider._userabout);
 
 
-        _professionViewModel.professionapi(onFailureRes: onProfFailureRes, onSuccessRes: onProfSuccessRes);
-      });
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _professionViewModel.ProfessionList.clear();
+          _professionViewModel.StateList.clear();
+          _professionViewModel.CityList.clear();
+
+          _professionViewModel.setUserProfession(null);
+          _professionViewModel.setUserCity(null);
+          _professionViewModel.setUserState(null);
+
+          _userAgeProvider.setUserRollSelect(false);
+          _userAgeProvider.setUserGenderSelect(false);
+          _userAgeProvider.setUserProfessionSelect(false);
+          _userAgeProvider.setUserStateSelect(false);
+          _userAgeProvider.setUserCitySelect(false);
+          _userAgeProvider.setUserDOBselect(false);
+
+
+          _professionViewModel.professionapi(onFailureRes: onProfFailureRes, onSuccessRes: onProfSuccessRes);
+        });
+      }
+
+
 
       // _dateController.text = DateFormat.yMd().format(DateTime.now());
    //   _dateController.text = "Enter your DOB";

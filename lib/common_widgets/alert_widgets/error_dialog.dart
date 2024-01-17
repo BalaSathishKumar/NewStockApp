@@ -7,10 +7,11 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class ErrorDialog extends StatelessWidget {
-  ErrorDialog({Key? key, required this.errorMsg, this.onBackPress})
+  ErrorDialog({Key? key, required this.errorMsg, this.onBackPress, this.titletxt})
       : super(key: key);
 
   var errorMsg = '';
+  String? titletxt;
   Function()? onBackPress;
 
   @override
@@ -24,17 +25,20 @@ class ErrorDialog extends StatelessWidget {
         children: [
           Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: Dimensions.dm_15),
-                child: Text(
-                  Strings.oopsHint,
-                  style: TextStyle(
-                    fontSize: Dimensions.dm_16,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
+               Visibility(
+                 visible: titletxt == ""? false : true,
+                 child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: Dimensions.dm_15),
+                  child: Text(
+                    titletxt ?? Strings.oopsHint,
+                    style: const TextStyle(
+                      fontSize: Dimensions.dm_16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
               ),
+               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: Dimensions.dm_10,

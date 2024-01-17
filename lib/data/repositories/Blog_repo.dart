@@ -24,4 +24,18 @@ class BlogsRepository {
       return null;
     }
   }
+  Future<BlogsResponseModel?> HOIapi() async {
+    final response = await _client.get("${EndPointConstants.hoi}");
+
+    Logger.appLogs('hoicallBackResponse:: $response');
+    if (response != null) {
+      //Success returning data back
+      Logger.appLogs('responseRepo:: $response');
+      return BlogsResponseModel.fromJson(response as Map<String, dynamic>);
+    } else {
+      //Failed returning null
+      Logger.appLogs('hoierrorNull:: $response');
+      return null;
+    }
+  }
 }

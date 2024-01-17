@@ -65,7 +65,7 @@ class _PortFolioPageState extends State<PortFolioPage>  with SingleTickerProvide
                 Isportfolio: true,
                 onPressed: () {
                   if (Constant.userRoll != "Guest") {
-                    showCustomBottomSheet(context);
+                    showAddEntryBottomSheet(context);
                   }
                 },
             IsAddAsset: viewModel.myBoolValue,
@@ -130,7 +130,7 @@ class _PortFolioPageState extends State<PortFolioPage>  with SingleTickerProvide
     );
   }
 
-  void showCustomBottomSheet(BuildContext context) {
+  void showAddEntryBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,

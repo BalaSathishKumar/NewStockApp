@@ -50,41 +50,45 @@ class _DealerVerifyPendingState extends State<DealerVerifyPending> {
                         child: SvgPicture.asset(LocalSVGImages.pvfy3,
                             fit: BoxFit.fill,)),
                     ),
-                    Container(
-                      height: deviceheight/2+200,
-                      width: devicewidth,
-                     // color: Colors.red.shade50,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                              height: 100,
-                              width: devicewidth,
-                              //  color: Colors.red,
-                              child:Align(
-                                  alignment: Alignment.center,
-                                  child: Text(proviledata.profileResponseModel?.user?.reviewMessage ?? ""))
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.only(top:0.0,left: 20,right: 20),
+                      child: Container(
+                        height: deviceheight/2+200,
+                        width: devicewidth,
+                       // color: Colors.red.shade50,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  height: 100,
+                                  width: devicewidth,
+                                   // color: Colors.red,
+                                  child:Text(proviledata.profileResponseModel?.user?.reviewMessage ?? "",textAlign: TextAlign.center,)
+                              ),
+                            ),
 
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: 80,
-                              width: MediaQuery.of(context).size.width,
-                           //   color: Colors.red,
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 18.0,right: 18,bottom: 18),
-                                  child: CustomMaterialButton(
-                                    text: 'Okay',
-                                    onPressed: widget.onPressed,
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                height: 80,
+                                width: MediaQuery.of(context).size.width,
+                             //   color: Colors.red,
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 18.0,right: 18,bottom: 18),
+                                    child: CustomMaterialButton(
+                                      text: 'Okay',
+                                      onPressed: widget.onPressed,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      )
+                          ],
+                        )
+                      ),
                     ),
 
                   ],
