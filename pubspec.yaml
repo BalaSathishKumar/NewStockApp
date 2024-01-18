@@ -85,6 +85,7 @@ dependencies:
   phonepe_payment_sdk: ^1.0.4
   crypto: ^3.0.2
   android_intent_plus: ^4.0.3
+  flutter_login_facebook: ^1.9.0
 
 
 

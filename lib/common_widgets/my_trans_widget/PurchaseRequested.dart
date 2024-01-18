@@ -1,5 +1,6 @@
 import 'package:base_flutter_provider_project/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -77,7 +78,7 @@ class _PurchaseRequestedState extends State<PurchaseRequested> {
                           child: InkWell(
                             onTap: () {
                               print('selected data::: ${purchasereqdata?[index].status.toString()}');
-                              EnterChat(purchasereqdata?[index].status);
+                              EnterChat(purchasereqdata?[index].status,purchasereqdata?[index].companyName ?? "");
                               },
                             child: Container(
                               //  height: 300,
@@ -147,7 +148,7 @@ class _PurchaseRequestedState extends State<PurchaseRequested> {
                                               child: buildNamewithHeading(
                                                   devicewidth,
                                                   "No of Shares",
-                                                  "${purchasereqdata?[index].quantity ?? ""}",
+                                                  "${purchasereqdata?[index].buyshareprice ?? ""}",
                                                   CustomTextStyle.txt12Rrtxtgry2,
                                                   CustomTextStyle .txt16Rmtxtblk,
                                                   Colors.transparent,
@@ -163,7 +164,11 @@ class _PurchaseRequestedState extends State<PurchaseRequested> {
                                                                 child: Column(
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
-                                                                    Icon(Icons.chat, size: 20,),
+                                                                    //Icon(Icons.chat, size: 20,),
+                                                                    SvgPicture.asset(LocalSVGImages.newchaticon,
+                                                                      width: 20,
+                                                                      height: 20,
+                                                                      fit: BoxFit.fill,)
                                                                    // Text("(Chat Enabled)")
                                                                   ],
                                                                 ),
@@ -246,15 +251,15 @@ class _PurchaseRequestedState extends State<PurchaseRequested> {
 
 
 
-  void EnterChat(int? status) {
+  void EnterChat(int? status, String assetname) {
     if (status == 2 || status == 3 || status == 4) {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ChatRoomPage(chatuserID: status ?? 0,IsAdminChat: true,)));
+              builder: (context) => ChatRoomPage(chatuserID: status ?? 0,IsAdminChat: true,username: assetname,)));
     }
     else{
-      showToast("Wait For Admin Approval..");
+     // showToast("Wait For Admin Approval..");
     }
   }
 
@@ -308,7 +313,7 @@ Container buildNamewithHeading(double devicewidth,String title,String descriptio
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Container(
-                    //color: Appcolors.red,
+                   // color: Appcolors.red,
                     child: Text(title,style: st1,maxLines: 1,overflow: TextOverflow.ellipsis,)),
               )),
 

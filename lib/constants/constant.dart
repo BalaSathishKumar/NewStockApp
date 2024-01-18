@@ -30,6 +30,7 @@ class Constant {
     'Credit Card Bill',
     'Others'
   ];
+  static List<DrawerItem> drawerItems3 = [];
   static List<DrawerItem> drawerItems2 = [
     DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'Profile'),
   //  DrawerItem(iconAsset: LocalSVGImages.menu1, title: 'KYC Update'),
@@ -41,6 +42,7 @@ class Constant {
     DrawerItem(iconAsset: LocalSVGImages.menu8, title: 'Consultations'),
     DrawerItem(iconAsset: LocalSVGImages.menu3, title: 'Rewards & Referrals'),
     DrawerItem(iconAsset: LocalSVGImages.menu3, title: 'Promocode'),
+
   ];
   static const termsOfUseUrl = 'https://jifytestbucket.s3.ap-south-1.amazonaws.com/Legal/TermsOfUser.pdf';
   static const kmTermsUrl = 'https://jifytestbucket.s3.ap-south-1.amazonaws.com/Legal/KMTermsOfUse.pdf';

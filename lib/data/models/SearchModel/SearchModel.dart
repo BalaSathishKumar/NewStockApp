@@ -1,3 +1,5 @@
+import '../Explore_model/ExploreModel.dart';
+
 class SearchModel {
   bool? status;
   List<Stocks>? stocks;
@@ -24,7 +26,7 @@ class SearchModel {
   }
 }
 
-class Stocks {
+class SSStocks {
   int? id;
   int? userId;
   int? categoryId;
@@ -52,7 +54,7 @@ class Stocks {
   String? updatedAt;
   String? photoUrl;
 
-  Stocks(
+  SSStocks(
       {this.id,
         this.userId,
         this.categoryId,
@@ -80,7 +82,7 @@ class Stocks {
         this.updatedAt,
         this.photoUrl});
 
-  Stocks.fromJson(Map<String, dynamic> json) {
+  SSStocks.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     categoryId = json['category_id'];

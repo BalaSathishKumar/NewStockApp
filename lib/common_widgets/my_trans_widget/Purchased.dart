@@ -2,6 +2,7 @@ import 'package:base_flutter_provider_project/constants/colors.dart';
 import 'package:base_flutter_provider_project/data/models/TransactionModel/PurchaseRequestModel.dart';
 import 'package:base_flutter_provider_project/utils/common_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/constant.dart';
@@ -121,7 +122,7 @@ class _PurchasedState extends State<Purchased> {
                                             child: buildNamewithHeading(
                                                 devicewidth,
                                                 "No of Shares",
-                                                "${purchasereqdata?[index].quantity ?? ""}",
+                                                "${purchasereqdata?[index].buyshareprice ?? ""}",
                                                 CustomTextStyle.txt12Rrtxtgry2,
                                                 CustomTextStyle .txt16Rmtxtblk,
                                                 Colors.transparent,
@@ -141,7 +142,11 @@ class _PurchasedState extends State<Purchased> {
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Icon(Icons.chat, size: 20,),
+                                                  //Icon(Icons.chat, size: 20,),
+                                                  SvgPicture.asset(LocalSVGImages.newchaticon,
+                                                    width: 20,
+                                                    height: 20,
+                                                    fit: BoxFit.fill,)
                                                 ],
                                               ),
                                             ),
@@ -231,7 +236,7 @@ class _PurchasedState extends State<Purchased> {
           MaterialPageRoute(builder: (context) => ChatRoomPage(chatuserID: status ?? 0,username: stockname,IsAdminChat: true,)));
     }
     else{
-      showToast("Wait For Admin Approval..");
+      //showToast("Wait For Admin Approval..");
     }
   }
 

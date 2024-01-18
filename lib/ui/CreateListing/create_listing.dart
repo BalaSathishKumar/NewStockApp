@@ -131,7 +131,7 @@ class _CreateListingState extends State<CreateListing> {
                     child: Container(
                         height: 110,
                         width: 110,
-                        // color: Appcolors.black,
+                       //  color: Appcolors.black,
                         child: Container(
                           padding: EdgeInsets.all(1), // Border width
                           decoration: BoxDecoration(

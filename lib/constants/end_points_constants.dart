@@ -15,10 +15,12 @@ class EndPointConstants {
   static const String exploreperforming = '/api/v1/stocks';
   static const String performdetail = '/api/v1/stock-browsing-list/';
   static const String exploredetail = '/api/v1/stock/';
+  static const String viewallapi = '/api/v1/stocks/viewall/';
   static const String addfav = '/api/v1/favourite/add';
   static const String getfav = '/api/v1/favourites';
   static const String insights = '/api/v1/insights';
   static const String blogs = '/api/v1/blogs';
+  static const String hoi = '/api/v1/house-of-investing';
   static const String catbasedblogs = '/api/v1/blog-category/';
   static const String getchat = '/api/v1/messages/';
   static const String getadminchat = '/api/v1/admin-messages';
@@ -57,5 +59,6 @@ class EndPointConstants {
   static const String verifyPayment = '/api/v1/subscription/payment/response';
   static const String redeemNow = '/api/v1/gift/purchase';
   static const String applycoupon = '/api/v1/subscription/apply/coupon';
+  static const String removecoupon = '/api/v1/subscription/remove/coupon';
 
 }

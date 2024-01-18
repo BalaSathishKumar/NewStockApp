@@ -598,8 +598,8 @@ ScrollFun();
 
   SetUsername(String? username) {
     print('username in chat:: ${widget.username}');
-    if(widget.username == null) {
-     return "Chat with a Pro";
+    if(widget.username == null || widget.username == "Admin") {
+     return "Chat with Sauda Team";
    }else {
      return widget.username;
    }

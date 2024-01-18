@@ -103,12 +103,12 @@ class User {
   String? city;
   String? state;
   int? professionId;
-  Null? customerId;
+  dynamic customerId;
   String? photo;
   String? about;
   String? referalCode;
-  Null? emailVerifiedAt;
-  Null? mobileVerifiedAt;
+  dynamic emailVerifiedAt;
+  dynamic mobileVerifiedAt;
   String? authToken;
   String? fcmTokan;
   String? facebookId;

@@ -25,6 +25,11 @@ class Appcolors {
   static  Color newgrd2 =   Color(0xFFF2FDC6);
   static  Color chatgrey =   Color(0xFF5F5F5F);
   static  Color soldRedNew =   Color(0xFFFDE8ED);
+  static  Color HOIpurple =   Color(0xFF6B49EB);
+  static  Color HOIbrown =   Color(0xFF1F1F39);
+  static  Color HOIred =   Color(0xFFD63031);
+  static  Color HOIorange =   Color(0xFFF0932B);
+  static  Color HOIliteorange =   Color(0xFFFDCB6E);
   static  Color purchaseGreenNew =   Color(0xFFF2FFBF);
   static  Color listtilegrey =   Color.fromRGBO(149, 159, 186, 1.0);
   static  Color txtlitegrey3 =  Color.fromRGBO(198, 206, 221, 1.0);

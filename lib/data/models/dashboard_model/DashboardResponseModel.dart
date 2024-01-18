@@ -1,4 +1,4 @@
-import '../AdvisorModels/ConsultationListModel.dart';
+import 'package:base_flutter_provider_project/data/models/User_Directory_model/ChatUsersList.dart';
 import '../Explore_model/ExploreModel.dart';
 
 class DashboardResponseModel {
@@ -342,7 +342,7 @@ class IpoFpo {
   String? createdAt;
   String? updatedAt;
   Stocks? stock;
-  User? user;
+  DashUser? user;
 
   IpoFpo(
       {this.id,
@@ -362,7 +362,7 @@ class IpoFpo {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     stock = json['stock'] != null ? new Stocks.fromJson(json['stock']) : null;
-    user = json['user']!= null ? new User.fromJson(json['stock']) : null;
+    user = json['user']!= null ? new DashUser.fromJson(json['stock']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -772,7 +772,7 @@ class FeaturedAdvisors {
   String? createdAt;
   String? updatedAt;
   Stocks? stock;
-  User? user;
+  DashUser? user;
 
   FeaturedAdvisors(
       {this.id,
@@ -792,7 +792,7 @@ class FeaturedAdvisors {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     stock = json['stock']!= null ? new Stocks.fromJson(json['user']) : null;
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? new DashUser.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -819,7 +819,7 @@ class FeaturedBroker {
   String? createdAt;
   String? updatedAt;
   Stocks? stock;
-  User? user;
+  DashUser? user;
 
   FeaturedBroker({
      this.id,
@@ -840,7 +840,7 @@ class FeaturedBroker {
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
     stock: Stocks.fromJson(json["stock"]),
-    user: User.fromJson(json["user"]),
+    user: DashUser.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -906,7 +906,7 @@ class FeaturedStocks {
 
 }
 
-class User {
+class DashUser {
   int? id;
   String? name;
   String? mobile;
@@ -938,7 +938,7 @@ class User {
   bool? chatEnable;
   String? ratings;
 
-  User(
+  DashUser(
       {this.id,
         this.name,
         this.mobile,
@@ -970,7 +970,7 @@ class User {
         this.chatEnable,
       this.ratings});
 
-  User.fromJson(Map<String, dynamic> json) {
+  DashUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     mobile = json['mobile'];

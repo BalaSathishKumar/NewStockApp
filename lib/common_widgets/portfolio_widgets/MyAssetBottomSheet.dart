@@ -130,7 +130,7 @@ class MyAssetBottomSheet extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildQuickStat(devicewidth, selectedAssets != null ?"No. shares owned":"Shares Held", selectedAssets != null ?selectedAssets?.noOfShares.toString() ?? "":"${selectedstocks?.quantity ?? ""}",
+                  buildQuickStat(devicewidth, selectedAssets != null ?"No. shares owned":"Shares Held", selectedAssets != null ?selectedAssets?.noOfShares.toString() ?? "":"${selectedstocks?.buyShareSize ?? ""}",
                       selectedAssets != null ?"Asset Value": "Value", selectedAssets != null ?selectedAssets?.assetValue.toString() ?? "":"Rs ${selectedstocks?.total ?? ""}"),
                   buildQuickStat(devicewidth, "Date of Purchase", selectedAssets != null ? formatDate(selectedAssets?.purchaseDate ?? ""):formatDate(selectedstocks?.createdAt ?? ""),
                       selectedAssets != null ?"Purchased From":"Seller/Broker", selectedAssets != null ?selectedAssets?.purchaseFrom ?? "":selectedstocks?.dealerName ?? ""),

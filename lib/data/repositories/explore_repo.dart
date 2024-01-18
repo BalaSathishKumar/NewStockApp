@@ -6,6 +6,7 @@ import '../../utils/logger.dart';
 import '../models/Explore_model/ExploreModel.dart';
 import '../models/Explore_model/ExplorePerformModel.dart';
 import '../models/Explore_model/PerformDetailModel.dart';
+import '../models/Explore_model/viewAllModel.dart';
 
 class ExploreRepository {
   final ApiClient _client = ApiClient();
@@ -13,11 +14,7 @@ class ExploreRepository {
   Future<ExploreModel?> explporeapi( String catID,String PageNo, String? keyword, String pricemin,  String? pricemax,String? sortbyprice, String? sortbyuserrating, String? sortbysaudarating, String? type, String? top,bool IsFilter, bool IsExploreSearch) async {
     print('explporeapi ::: ${setEndPoint( catID, PageNo,  keyword,  pricemin,   pricemax, sortbyprice,  sortbyuserrating,  sortbysaudarating,  type,  top, IsFilter,  IsExploreSearch)}');
 
-
     final response =  await _client.get(setEndPoint( catID, PageNo,  keyword,  pricemin,   pricemax, sortbyprice,  sortbyuserrating,  sortbysaudarating,  type,  top, IsFilter,  IsExploreSearch));
-
-
-
 
     Logger.appLogs('explorecallBackResponse:: $response');
     if (response != null) {
@@ -56,6 +53,22 @@ class ExploreRepository {
     } else {
       //Failed returning null
       Logger.appLogs('performdetailerrorNull:: $response');
+      return null;
+    }
+  }
+
+
+  Future<viewAllModel?> viewAllapi( String title,String pageNo) async {
+    final response = await _client.get("${EndPointConstants.viewallapi}${title}?page=$pageNo");
+
+    Logger.appLogs('viewallapicallBackResponse:: $response');
+    if (response != null) {
+      //Success returning data back
+      Logger.appLogs('responseRepo:: $response');
+      return viewAllModel.fromJson(response as Map<String, dynamic>);
+    } else {
+      //Failed returning null
+      Logger.appLogs('viewallapierrorNull:: $response');
       return null;
     }
   }

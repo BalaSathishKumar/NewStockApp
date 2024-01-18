@@ -48,8 +48,8 @@ class DashboardViewModel extends BaseViewModel {
         serviceyears.clear();
        // print('load service year1 ${_dashboardResponseModel?.data?.featuredBrokers?.length}');
 
-        for(FeaturedBroker item in _dashboardResponseModel?.data?.featuredBrokers ?? []) {
-          for(UserMetaData usermeta in item.user?.userMetaData ?? []){
+  /*      for(FeaturedBroker item in _dashboardResponseModel?.data?.featuredBrokers ?? []) {
+          for(UserMetaData usermeta in item.user ?? []){
 
             if(usermeta.key == "service_year"){
 
@@ -58,7 +58,7 @@ class DashboardViewModel extends BaseViewModel {
             }
 
           }
-        }
+        }*/
 
         onSuccessRes(_dashboardResponseModel);
         addCaatList(_dashboardResponseModel);

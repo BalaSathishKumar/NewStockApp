@@ -167,7 +167,9 @@ class _ExplorepageState extends State<Explorepage>
                       ExploreScroll(
                         onPressed: (selectedperform){
                           print('selected browsing list ${selectedperform.name}');
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>StockViewallPage(stockname: "Browsing List",browswid:  selectedperform.id,browsename: selectedperform.name,)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>StockViewallPage(
+                            stockname: "Browsing List",
+                            browswid:  selectedperform.id,browsename: selectedperform.name,)));
                           },
                           optionslist: [],
                           firsttitle: "Featured",
@@ -333,7 +335,6 @@ class _Tab1ContentState extends State<Tab1Content> {
         );
       }
 
-
     });
 
   }
@@ -346,7 +347,7 @@ class _Tab1ContentState extends State<Tab1Content> {
       backgroundColor: Colors.white,
       body:Consumer<ExploreViewModel>(
           builder: (context,exmodel,child) {
-        return Container(
+        return exmodel.state == ViewState.busy ? Loader():Container(
             height: deviceheight,
             width: devicewidth,
             child: TabContainers(

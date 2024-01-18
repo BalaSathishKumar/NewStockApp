@@ -1,9 +1,11 @@
+import 'package:base_flutter_provider_project/data/models/Explore_model/ExploreModel.dart';
 import 'package:base_flutter_provider_project/ui/TradeUnlist/SendEnquiry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../common_widgets/Explore_widgets/Tab_Containers.dart';
 import '../../common_widgets/Stock_widgets/StockSections.dart';
 import '../../common_widgets/Stock_widgets/TrendingStocks.dart';
 import '../../common_widgets/appbar_widgets/common_appbar.dart';
@@ -13,6 +15,7 @@ import '../../constants/colors.dart';
 import '../../constants/local_images.dart';
 import '../../viewModel/base_view_model/base_view_model.dart';
 import '../../viewModel/dashboard_view_model.dart';
+import '../../viewModel/explore_view_model.dart';
 import '../explore/exploreDetail.dart';
 import '../home/StockViewall.dart';
 import '../home/homepage.dart';
@@ -26,111 +29,19 @@ class TradeUnlisted extends StatefulWidget {
 }
 
 class _TradeUnlistedState extends State<TradeUnlisted> {
-  final List<ListItem> items = [
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        text: 'Yellow Studios',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'YLW',
-        colors: 2,
-        imageUrl: LocalPNGImages.cp1),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Pharma Focused",
-        statyears: "5+ years",
-        text: 'Purple Flame Co.',
-        rate: '1681',
-        shname: 'PFC',
-        colors: 2,
-        imageUrl: LocalPNGImages.cp2),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Crypto",
-        statyears: "5+ years",
-        text: 'Dino Pharma',
-        rate: '541',
-        shname: 'DRL',
-        colors: 2,
-        imageUrl: LocalPNGImages.cp3),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        statyears: "5+ years",
-        text: 'API Holdings',
-        rate: '321',
-        shname: 'API',
-        colors: 2,
-        imageUrl: LocalPNGImages.cp4),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        statyears: "5+ years",
-        text: 'Abservetech',
-        rate: '150',
-        shname: 'ABS',
-        colors: 5,
-        imageUrl: LocalPNGImages.cp5),
 
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        statyears: "5+ years",
-        text: 'Yellow Studios',
-        rate: '132',
-        shname: 'YLW',
-        colors: 5,
-        imageUrl: LocalPNGImages.cp1),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        statyears: "5+ years",
-        text: 'Purple Flame Co.',
-        rate: '1681',
-        shname: 'PFC',
-        colors: 6,
-        imageUrl: LocalPNGImages.cp2),
-    ListItem(
-        lotsize: "1",
-        stattxt: "Stat",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "Top Rated",
-        statyears: "5+ years",
-        text: 'Dino Pharma',
-        rate: '541',
-        shname: 'DRL',
-        colors: 6,
-        imageUrl: LocalPNGImages.cp3),
-  ];
   late DashboardViewModel _dashboardViewModel;
-
+  late ExploreViewModel _exploreViewModel;
   @override
   void initState() {
     super.initState();
     _dashboardViewModel = Provider.of<DashboardViewModel>(context, listen: false);
+    _exploreViewModel = Provider.of<ExploreViewModel>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //Calling api after UI gets rendered successfully
+      _exploreViewModel.exploreapi(onFailureRes: onFailureRes, onSuccessRes: onSuccessRes, catID: "1",PageNo: "1");
+
+    });
   }
 
   @override
@@ -235,82 +146,34 @@ class _TradeUnlistedState extends State<TradeUnlisted> {
                     ),
                   ),
                 ),
-      /*  Consumer<DashboardViewModel>(
-        builder: (context, dashoardviewmodel, child) {
-          return   StocksSections(
-            OnTopStocksPressed2: (selectedTopStocks2){},
-            OnTopStocksPressed: (selectedTopStocks){},
-              OnIpoStocksPressed: (selectedIpoStocks){},
-              Filterdata: [],
-              ipostocks: [],
-              featuredStocks: dashoardviewmodel.dashboardResponseModel?.data?.featuredStocks,
-              viewall: "viewallul",
-              optionslist: [],
-              firsttitle: "Fetured",
-              secondtitle: "Top Stocks",
-              imagetag: "topstocksviewall",
-              items: items,
-              devicewidth: devicewidth);
-        }),*/
-                Consumer<DashboardViewModel>(
-                    builder: (context, dashfildata, child) {
-                      return  dashfildata.state == ViewState.busy? Loader():StocksSections(
-                        ViewallClick: (v){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => StockViewallPage(stockname: "Top Stocks")));
-                        },
-                          OnTopStocksPressed2: (selectedTopStocks2){},
-                          Filterdata: dashfildata.dashboardFilterResponseModel?.data ?? [],
-                          OnIpoStocksPressed: (selectedIpoStocks) {},
-                          OnTopStocksPressed: (selectedTopStocks) {
-                            print('Top Stocks Clicked name${selectedTopStocks?.stock?.name ?? ""}');
-                            print('Top Stocks Clicked id${selectedTopStocks?.stock?.id ?? ""}');
-                            if (selectedTopStocks?.stock != null) {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreDetail(selectedstocks: selectedTopStocks?.stock,isExplore: false,)));
-                            }
-                          },
-                          viewall: "viewall",
-                          optionslist: dashfildata.catList,
-                          /*  optionslist: [
-                                        'Stock Category',
-                                        'Medical',
-                                        'Software'
-                                      ],*/
-                          firsttitle: "Fetured",
-                          secondtitle: "Top Stocks",
-                          imagetag: "topstocksviewall",
-                          items: items,
-                          devicewidth: devicewidth,
-                          featuredStocks: _dashboardViewModel
-                              .dashboardResponseModel?.data
-                              ?.featuredStocks,
-                          ipostocks: []);
+                SizedBox(
+                  height: 10,
+                ),
+                Consumer<ExploreViewModel>(
+                    builder: (context,exmodel,child) {
+                      return exmodel.state == ViewState.busy ? Loader():Container(
+                          height: deviceheight,
+                          width: devicewidth,
+                          child: TabContainers(
+                            IsMylisting: false,
+                            IsFavorite: false,
+                            IsIpo: false,
+                            IsTopStocks: false,
+                            IsBrowsing: false,
+                            IsTendingStocks: false,
+                            IsExplorePage: true,
+                            onPressed: (selecteditems) {
+                              print('explorre list clicked ${selecteditems?.categoryButtons?.length ?? "Cat Name is null"}');
+
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> ExploreDetail(selectedstocks: selecteditems,isExplore: true,)));
+                            },
+
+                          )
+                      );
                     }
                 ),
 
-                Consumer<DashboardViewModel>(
-                builder: (context, dashTS, child) {
-                  return TrendingStocks(
-                    imagetag: "Trendingstocks",
-                    secondtitle: "",
-                    firsttitle: "Trending Stocks",
-                    devicewidth: devicewidth,
-                    onPressed: () {
-                      print('discover more clicked in trade unlisted');
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>StockViewallPage(stockname: "Trending Stocks")));
-                    },
-                    trendingstocks: dashTS.dashboardResponseModel?.data?.trendingstocks ?? [],
-                    Filterdata: dashTS.dashboardFilterResponseModel2?.data ?? [],
-                    OnTrengStocksPressed: (selectedTrendStocks){
-                      print('onpress trending stocks ${selectedTrendStocks?.stock?.name ?? ""}');
-                      if (selectedTrendStocks?.stock != null) {
-                        // Route route = MaterialPageRoute(builder: (context) => ExploreDetail(selectedstocks: selectedTrendStocks?.stock,isExplore: false,));
-                        // Navigator.pushReplacement(context, route);
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreDetail(selectedstocks: selectedTrendStocks?.stock,isExplore: true,)));
-                      }
-                    },
-                  );
-                }
-                ),
+
               ],
             ),
           ),
@@ -330,5 +193,11 @@ class _TradeUnlistedState extends State<TradeUnlisted> {
       // Handle an error if the URL can't be launched.
       print('Could not launch WhatsApp');
     }
+  }
+
+  onFailureRes(String p1) {
+  }
+
+  onSuccessRes(ExploreModel? p1) {
   }
 }

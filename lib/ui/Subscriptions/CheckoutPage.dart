@@ -39,7 +39,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
     var devicewidth =    MediaQuery.of(context).size.width;
     return Consumer<PaymentPlanViewModel>(
         builder: (context,couponVM,child){
-        var chkCouponStatus =couponVM.CheckoutresponseModel?.status;
+        var chkCouponCode =couponVM.CheckoutresponseModel?.data?.couponCode ?? "";
+        var CouponData =couponVM.CheckoutresponseModel?.data;
       return Scaffold(
         appBar: AppBar(
             centerTitle: false,
@@ -100,8 +101,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   ),
                 ),
                 SizedBox(height: 12),
-                AppliedCard(devicewidth,"Discount Applied"," (remove)","${couponVM.CheckoutresponseModel?.data?.discountAmount ?? "0"}"),
-                AppliedCard(devicewidth,"Total","",couponVM.CheckoutresponseModel?.data?.total.toString() ?? "${ selectedPlans?.amount.toString()}"),
+                AppliedCard(devicewidth,"Discount Applied","  ${setRemove(chkCouponCode)}","${couponVM.CheckoutresponseModel?.data?.discountAmount ?? "0"}",CouponData),
+                AppliedCard(devicewidth,"Total","",couponVM.CheckoutresponseModel?.data?.total.toString() ?? "${ selectedPlans?.amount.toString()}",CouponData),
                 SizedBox(height: 24),
                 couponVM.state == ViewState.busy? Loader():   Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -119,7 +120,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
     );
   }
 
-  Container AppliedCard(double devicewidth,String txt1,String txt2,String price) {
+  Container AppliedCard(double devicewidth,String txt1,String txt2,String price, Data? couponData) {
     return Container(
             width: devicewidth,
          //   color: Colors.red.shade50,
@@ -132,7 +133,24 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: Align(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(txt1,style: CustomTextStyle.txt12Rlblk,),
+                            InkWell(
+                                onTap: (){
+                                  print('remove');
+                              Map<String, dynamic> removeparam = {
+                                    "plan_id": couponData?.planId,
+                                    "total": selectedPlans?.amount,
+                                    "coupon_code":couponData?.couponCode  //"SUSFLAT2"
+                                  };
+                                  _applycouponViewModel.RemoveCouponApi(onFailureRes: onFailureRes, onSuccessRes: onRmvSuccessRes, removeparam: removeparam);
+                                },
+                                child: Text(txt2, style: CustomTextStyle.txt12Rlred)),
+                          ],
+                        )
+                      /*  Align(
                           alignment: Alignment.centerRight,
                           child: buildRichText(
                             TextSpan(text: txt1),
@@ -140,7 +158,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                 style: CustomTextStyle.txt12Rlred),
                             CustomTextStyle.txt12Rlblk,
                           ),
-                        ),
+                        ),*/
                       ),
                       Expanded(
                           flex: 1,
@@ -180,6 +198,18 @@ class _CheckOutPageState extends State<CheckOutPage> {
     }else{
       showToast("Coupon Applied!");
     }
+  }
+
+  setRemove(String? chkCouponCode) {
+    print('chkCouponCode ${chkCouponCode}');
+    if(chkCouponCode == null || chkCouponCode  == "") {
+      return "";
+    }else{
+      return "(remove)";
+    }
+  }
+
+  onRmvSuccessRes(CheckoutResponseModel? p1) {
   }
 }
 

@@ -95,6 +95,22 @@ class PaymentPlanRepository {
     }
   }
 
+  Future<CheckoutResponseModel?> RemoveCouponapi( Map<String,dynamic> Rmvcouponparam) async {
+    final response = await _client.post("${EndPointConstants.removecoupon}",body: Rmvcouponparam);
+
+    Logger.appLogs('removecouponcallBackResponse:: $response');
+    if (response != null) {
+      //Success returning data back
+      Logger.appLogs('responseRepo:: $response');
+
+      return CheckoutResponseModel.fromJson(response as Map<String, dynamic>);
+    } else {
+      //Failed returning null
+      Logger.appLogs('removecouponerrorNull:: $response');
+      return null;
+    }
+  }
+
 
   Future<PhonepeAuthModel?> ReqAuthapi(String callback,String checksum,String base64Body) async {
     Duration millisec = const Duration(milliseconds: 10000);

@@ -41,7 +41,7 @@ class _DealerInboxState extends State<DealerInbox> {
     return Scaffold(
       backgroundColor: Appcolors.white,
       appBar: CustomAppBar(
-          height: 80.0, title: 'Chat Messages', appbarclr: Appcolors.white),
+          height: 80.0, title: 'Chat Messages', appbarclr: Appcolors.white,),
       body: Container(
         height: deviceheight,
         width: devicewidth,
@@ -50,7 +50,7 @@ class _DealerInboxState extends State<DealerInbox> {
 
           Expanded(child: DealerChatInboxUI(
               onclicked: (chat){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomPage(chatuserID: chat?.sender?.id ?? 0,IsAdminChat: false,)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomPage(chatuserID: chat?.sender?.id ?? 0,IsAdminChat: false,username: chat?.sender?.name ?? "",)));
               },
               onDelete: (chat){
             print('chat History call back ${chat?.id.toString()}');

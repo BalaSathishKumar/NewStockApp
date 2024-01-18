@@ -25,6 +25,8 @@ class CustomAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       title: Text(title),
       content: SingleChildScrollView(
         child: Column(

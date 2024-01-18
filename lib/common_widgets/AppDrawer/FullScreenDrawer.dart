@@ -71,12 +71,14 @@ class _FullScreenDrawerState extends State<FullScreenDrawer> {
                          child: Column(
                            mainAxisAlignment: MainAxisAlignment.end,
                            children: [
-                            // SizedBox(height: 20,),
+                            SizedBox(height: 20,),
                              Text(profilvm.profileResponseModel?.user?.name ?? "",
                                  style: CustomTextStyle.txt16Rmtxtblk),
                              Text("${profilvm.profileResponseModel?.user?.roleName ?? ""} Account",
                                  style: CustomTextStyle.txt14Rmtxtpurp),
-                             SizedBox(height: 20,)
+                             Text(profilvm.profileResponseModel?.user?.statusText ?? "",
+                                 style: CustomTextStyle.txt14Rmtxtblk),
+                             SizedBox(height: 10,)
                            ],
                          ),
                        ),
@@ -204,7 +206,11 @@ class _FullScreenDrawerState extends State<FullScreenDrawer> {
                 itemCount:  widget.drawerItems.length,
                 itemBuilder: (context, index) {
 
-                  return   widget.drawerItems[index].title != "" && widget.drawerItems[index].iconAsset != ""?ListTile(
+                  chkRoll( widget.drawerItems[index]);
+
+                  return   widget.drawerItems[index].title != "" && widget.drawerItems[index].iconAsset != ""?
+
+                  ListTile(
                     leading: SvgPicture.asset(widget.drawerItems[index].iconAsset,
                         height: 20, width: 20),
                     title: Text(widget.drawerItems[index].title,style: CustomTextStyle.txt16Rmtxtblk,),
@@ -235,6 +241,14 @@ class _FullScreenDrawerState extends State<FullScreenDrawer> {
         ),
       ),
     );
+  }
+
+  void chkRoll(DrawerItem drawerItem) {
+
+    if(drawerItem.title == "Subscriptions Details"&& Constant.userRoll != 'Brokers' || Constant.userRoll != 'Advisors' ){
+      print('drawerItem.title::aa: ${drawerItem.title}');
+   // widget.drawerItems.remove(drawerItem);
+  }
   }
 
 

@@ -216,7 +216,8 @@ class _SplashState extends State<Splash> {
         PushNotification notification = PushNotification(
           title: message.notification?.title,
           body: message.notification?.body,
-          type: message.data["type"] == "chat" ? "chat" : "nochat"
+         // type: message.data["type"] == "chat" ? "chat" : "nochat"
+          type: message.data["type"]
         );
 
         _commonProvider.setNotificationInfo(notification);
@@ -228,8 +229,7 @@ class _SplashState extends State<Splash> {
           triggerChat(_notificationInfo);
           // For displaying the notification as an overlay
           showSimpleNotification(
-            Text(
-              _notificationInfo?.title ?? "",
+            Text(_notificationInfo?.title ?? "",
               style: TextStyle(color: Colors.black),
             ),
             subtitle: Text(_notificationInfo?.body ?? "",
@@ -331,8 +331,11 @@ class _SplashState extends State<Splash> {
     print('notificationInfo ${notificationInfo?.type}');
 
     if(notificationInfo?.type == "chat"){
-      print('Hit api');
+      print('Hit chat api');
       _chatRoomViewModel.setIsTriggerChat(true);
+    }else if(notificationInfo?.type == "status"){
+      print('Hit profile api');
+      _commonProvider.setIsTriggerProfile(true);
     }
   }
 

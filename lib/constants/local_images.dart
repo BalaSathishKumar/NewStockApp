@@ -123,6 +123,9 @@ class LocalSVGImages {
   static const String splashbg = 'assets/svg_icons/splashbg.svg';
   static const String smiley = 'assets/svg_icons/smiley.svg';
   static const String sendgreen = 'assets/svg_icons/SendGreen.svg';
+  static const String newchaticon = 'assets/svg_icons/chaticon.svg';
+  static const String hoibg = 'assets/svg_icons/hoibg.svg';
+  static const String ar1 = 'assets/svg_icons/ar1.svg';
 }
 
 class LocalPNGImages {

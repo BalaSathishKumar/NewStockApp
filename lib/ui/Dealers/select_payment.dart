@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:base_flutter_provider_project/data/models/DealerModels/PayementPlanModel.dart';
 import 'package:base_flutter_provider_project/data/models/DealerModels/SunscriptionModel.dart';
+import 'package:base_flutter_provider_project/data/models/dashboard_model/ProfileResponseModel.dart';
 import 'package:base_flutter_provider_project/ui/Dealers/DealerVerifyPending.dart';
 import 'package:base_flutter_provider_project/ui/Dealers/phonePayPayment.dart';
 import 'package:base_flutter_provider_project/utils/common_functions.dart';
@@ -30,6 +31,7 @@ import '../../services/dio_client.dart';
 import '../../utils/generic_exception.dart';
 import '../../utils/logger.dart';
 import '../../viewModel/CommonProvider.dart';
+import '../../viewModel/profile_view_model.dart';
 import '../Subscriptions/CheckoutPage.dart';
 import '../Subscriptions/PaymentPlanDetails.dart';
 import '../home/homepage.dart';
@@ -46,113 +48,9 @@ class _SelectPaymentState extends State<SelectPayment> {
   final GlobalKey<ExpansionTileCardState> cardA = GlobalKey();
   final GlobalKey<ExpansionTileCardState> cardB = GlobalKey();
 
-  final List<ListItem> items = [
-    ListItem(
-        lotsize: "1",
-        stattxt: "per week",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "499",
-        text: 'Weekly Plan',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'YLW',
-        colors: 0xFF3366FF,
-        imageUrl: LocalPNGImages.story1),
 
-    ListItem(
-        lotsize: "1",
-        stattxt: "per month",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "1800",
-        text: 'Monthly Plan',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'YLW',
-        colors: 0xFF3366FF,
-        imageUrl: LocalPNGImages.story1),
-
-    ListItem(
-        lotsize: "1",
-        stattxt: "every 3 month",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "4100",
-        text: 'Quarterly Plan',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'YLW',
-        colors: 0xFF3366FF,
-        imageUrl: LocalPNGImages.story1),
-
-    ListItem(
-        lotsize: "1",
-        stattxt: "per year",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "9999",
-        text: 'Annual Plan',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'YLW',
-        colors: 0xFF3366FF,
-        imageUrl: LocalPNGImages.story1),
-
-    ListItem(
-        lotsize: "1",
-        stattxt: "per week",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "499",
-        text: 'Weekly Plan',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'YLW',
-        colors: 0xFF3366FF,
-        imageUrl: LocalPNGImages.story1),
-
-    ListItem(
-        lotsize: "1",
-        stattxt: "per month",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "1800",
-        text: 'Monthly Plan',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'YLW',
-        colors: 0xFF3366FF,
-        imageUrl: LocalPNGImages.story1),
-
-    ListItem(
-        lotsize: "1",
-        stattxt: "every 3 month",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "4100",
-        text: 'Quarterly Plan',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'YLW',
-        colors: 0xFF3366FF,
-        imageUrl: LocalPNGImages.story1),
-
-    ListItem(
-        lotsize: "1",
-        stattxt: "per year",
-        statres: "E-Mobility",
-        statres2: "100k",
-        toprated: "9999",
-        text: 'Annual Plan',
-        statyears: "5+ years",
-        rate: '132',
-        shname: 'YLW',
-        colors: 0xFF3366FF,
-        imageUrl: LocalPNGImages.story1),
-
-  ];
   late PaymentPlanViewModel _paymentplanViewModel;
+  late ProfileViewModel _profileViewModel;
   //String callback = "flutterDemoApp";
   // String checksum = sha256(base64Body + apiEndPoint + salt) + ### + saltIndex;
   Map<String, String> headers = {};
@@ -253,6 +151,7 @@ class _SelectPaymentState extends State<SelectPayment> {
   void initState() {
     super.initState();
     _paymentplanViewModel =  Provider.of<PaymentPlanViewModel>(context, listen: false);
+    _profileViewModel =  Provider.of<ProfileViewModel>(context, listen: false);
     phonepeInit();
 
 
@@ -298,7 +197,7 @@ class _SelectPaymentState extends State<SelectPayment> {
                       child: Container(
                         height: deviceheight,
                         width: devicewidth,
-                        child: PaymentPlanDetails( devicewidth: devicewidth,deviceheight: deviceheight,items: items,onPressed: (selectedPlans){
+                        child: PaymentPlanDetails( devicewidth: devicewidth,deviceheight: deviceheight,onPressed: (selectedPlans){
                           Navigator.push(context,MaterialPageRoute(builder: (context) => CheckOutPage(selectedPlans: selectedPlans,
                             onPressed: (){
                             var chkCouponStatus =couponVM.CheckoutresponseModel?.status;
@@ -460,7 +359,14 @@ var subStatus= subsResponse?.status;
 
 
   onVerfySuccessRes(StatusandMessageModel? p1) {
+    _profileViewModel.profileapi(onFailureRes: onProfileFailureRes,onSuccessRes: onProfileRegSuccessRes);
     Navigator.push(context, MaterialPageRoute(builder: (context) => DonePage(purchaseType: "payment",isPaymentPage: true,)));
+  }
+
+  onProfileFailureRes(String p1) {
+  }
+
+  onProfileRegSuccessRes(ProfileResponseModel? p1) {
   }
 }
 

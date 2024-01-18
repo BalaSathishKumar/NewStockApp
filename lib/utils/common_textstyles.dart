@@ -130,6 +130,16 @@ class CustomTextStyle {
     fontFamily: "Roboto",
     color: Appcolors.tbblacktxt,
   );
+  static  TextStyle txt14Rbtxtwhite = TextStyle(
+    fontSize: 14.0,
+    fontFamily: "Roboto",
+    color: Appcolors.white,
+  );
+  static  TextStyle txt12Rbtxtwhite = TextStyle(
+    fontSize: 12.0,
+    fontFamily: "Roboto",
+    color: Appcolors.white,
+  );
 
   static  TextStyle txt24Rblitegreen = TextStyle(
     fontSize: 24.0,
@@ -141,6 +151,11 @@ class CustomTextStyle {
     fontSize: 24.0,
     fontFamily: "Roboto",
     color: Appcolors.black,
+  );
+  static  TextStyle txt24Rbwhite = TextStyle(
+    fontSize: 24.0,
+    fontFamily: "Roboto",
+    color: Appcolors.white,
   );
   static  TextStyle txt33Rbwhite = TextStyle(
     fontSize: 33.0,

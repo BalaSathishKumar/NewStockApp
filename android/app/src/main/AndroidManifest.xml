@@ -52,11 +52,16 @@
        <meta-data android:name="com.phonepe.android.sdk.isSimulator" android:value="true"/>
        <meta-data android:name="com.phonepe.android.sdk.MerchantId" android:value="PGTESTPAYUAT"/>
        <!--<meta-data android:name="com.phonepe.android.sdk.AppId" android:value="appId"/>-->
-
+       <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+       <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
 
        <activity
            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
            android:theme="@android:style/Theme.Translucent.NoTitleBar"
            android:exported="false" />
-    </application>
+
+   </application>
+    <queries>
+        <package android:name="com.facebook.katana" />
+    </queries>
 </manifest>

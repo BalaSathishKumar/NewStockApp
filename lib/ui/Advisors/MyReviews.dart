@@ -127,7 +127,8 @@ class _MyReviewsState extends State<MyReviews> {
                                     // Image.network(),
                                     title: Row(
                                       children: [
-                                        Text(ReviewList?[index].stock?.name ?? ""),
+                                        Expanded(
+                                            child: Text(ReviewList?[index].stock?.name ?? "")),
                                         SizedBox(width: 10),
                                         InkWell(
                                           onTap: () {
